@@ -9,7 +9,7 @@ DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 LOG_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/log
 # Wher the tfrecord file is save to
 OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_train
-python train_inception_single.py \
+python train.py \
 --learning_rate=2e-4 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
