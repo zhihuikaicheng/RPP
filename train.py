@@ -344,7 +344,7 @@ class Trainer(object):
             scope='resnet_v2_50',
             global_pool=False,
             output_stride=None,
-            spatial_squeeze=True,
+            spatial_squeeze=False,
             reuse=None
         )
         self.network = network

@@ -26,8 +26,8 @@ python train.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---scale_height=128 \
---scale_width=64 \
+--scale_height=384 \
+--scale_width=128 \
 --GPU_use=2
 
 # python train_inception_single.py \
