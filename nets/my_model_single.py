@@ -21,7 +21,7 @@ class BaseModel(object):
         '''
 
 class MyResNet(BaseModel):
-    def __init__(self, num_classes, sizes, scope, output_stride, spatial_squeeze, reuse, is_training=True):
+    def __init__(self, num_classes, sizes, scope, output_stride, spatial_squeeze, reuse, global_pool, is_training=True):
         self.num_classes = num_classes
         self.height = sizes[0]
         self.width = sizes[1]
@@ -30,6 +30,7 @@ class MyResNet(BaseModel):
         self.output_stride = output_stride
         self.spatial_squeeze = spatial_squeeze
         self.reuse = reuse
+        self.global_pool = global_pool
 
         with tf.variable_scope(scope):
             self.init_input()
@@ -50,7 +51,7 @@ class MyResNet(BaseModel):
 
         sub_model = SubResNet([self.image,self.label],
                 self.num_classes, self.height, self.width, 'branch_0', is_training=self.is_training,
-                output_stride=self.output_stride, spatial_squeeze=self.spatial_squeeze, reuse=self.reuse)
+                output_stride=self.output_stride, spatial_squeeze=self.spatial_squeeze, reuse=self.reuse, global_pool=self.global_pool)
         self.sub_models.append(sub_model)
 
         # if len(self.sizes) > 1:
@@ -116,7 +117,7 @@ class MyResNet(BaseModel):
             model.load_pretrain_model(sess, path, self.scope)
 
 class SubResNet(BaseModel):
-    def __init__(self, input, num_classes, height, width, scope, output_stride, spatial_squeeze, spatial_squeezeis_training=True):
+    def __init__(self, input, num_classes, height, width, scope, output_stride, spatial_squeeze, reuse, global_pool, spatial_squeezeis_training=True):
         self.image = input[0]
         self.label = input[1]
         self.num_classes = num_classes
@@ -124,6 +125,10 @@ class SubResNet(BaseModel):
         self.width = width
         self.scope = scope
         self.is_training = is_training
+        self.output_stride = output_stride
+        self.global_pool = global_pool
+        self.reuse = reuse
+        self.spatial_squeeze = spatial_squeeze
 
         with tf.variable_scope(self.scope):
             self.init_network()
@@ -140,10 +145,10 @@ class SubResNet(BaseModel):
             x,
             num_classes=self.num_classes,
             is_training=self.is_training,
-            global_pool=True,
-            output_stride=None,
-            spatial_squeeze=True,
-            reuse=None
+            global_pool=self.global_pool,
+            output_stride=self.output_stride,
+            spatial_squeeze=self.spatial_squeeze,
+            reuse=self.reuse
         )
 
         self.logits = net['resnet_v2_50/logits']
