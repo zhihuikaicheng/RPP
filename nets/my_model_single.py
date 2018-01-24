@@ -47,7 +47,7 @@ class MyResNet(BaseModel):
 
         sub_model = SubResNet([self.image,self.label],
                 self.num_classes, self.height, self.width, 'branch_0', is_training=self.is_training,
-                output_stride=output_stride, spatial_squeeze=spatial_squeeze, reuse=reuse)
+                output_stride=self.output_stride, spatial_squeeze=self.spatial_squeeze, reuse=self.reuse)
         self.sub_models.append(sub_model)
 
         # if len(self.sizes) > 1:
@@ -113,7 +113,7 @@ class MyResNet(BaseModel):
             model.load_pretrain_model(sess, path, self.scope)
 
 class SubResNet(BaseModel):
-    def __init__(self, input, num_classes, height, width, scope, is_training=True, output_stride, spatial_squeeze, spatial_squeeze):
+    def __init__(self, input, num_classes, height, width, scope, output_stride, spatial_squeeze, spatial_squeezeis_training=True):
         self.image = input[0]
         self.label = input[1]
         self.num_classes = num_classes
