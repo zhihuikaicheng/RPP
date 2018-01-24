@@ -27,6 +27,9 @@ class MyResNet(BaseModel):
         self.width = sizes[1]
         self.scope = scope
         self.is_training = is_training
+        self.output_stride = output_stride
+        self.spatial_squeeze = spatial_squeeze
+        self.reuse = reuse
 
         with tf.variable_scope(scope):
             self.init_input()
