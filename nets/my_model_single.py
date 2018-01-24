@@ -148,7 +148,8 @@ class SubResNet(BaseModel):
             global_pool=self.global_pool,
             output_stride=self.output_stride,
             spatial_squeeze=self.spatial_squeeze,
-            reuse=self.reuse
+            reuse=self.reuse,
+            scope='resnet_v2_50'
         )
 
         self.logits = end_points['resnet_v2_50/logits']
