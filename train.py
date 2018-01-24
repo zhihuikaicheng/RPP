@@ -341,7 +341,7 @@ class Trainer(object):
             FLAGS.num_classes-FLAGS.labels_offset,
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=True,
-            scope=None,
+            scope='resnet_v2_50',
             output_stride=None,
             spatial_squeeze=True,
             reuse=None
