@@ -151,7 +151,7 @@ class SubResNet(BaseModel):
             reuse=self.reuse
         )
 
-        self.logits = net['resnet_v2_50/logits']
+        self.logits = end_points['resnet_v2_50/logits']
         self.pred = end_points['predictions']
         self.end_points = end_points
 
