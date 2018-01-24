@@ -117,7 +117,7 @@ class MyResNet(BaseModel):
             model.load_pretrain_model(sess, path, self.scope)
 
 class SubResNet(BaseModel):
-    def __init__(self, input, num_classes, height, width, scope, output_stride, spatial_squeeze, reuse, global_pool, spatial_squeezeis_training=True):
+    def __init__(self, input, num_classes, height, width, scope, output_stride, spatial_squeeze, reuse, global_pool, spatial_squeeze, is_training=True):
         self.image = input[0]
         self.label = input[1]
         self.num_classes = num_classes
