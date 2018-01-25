@@ -151,7 +151,7 @@ class SubResNet(BaseModel):
             scope='resnet_v2_50'
         )
 
-        self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/logits']
+        self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
         self.pred = end_points['predictions']
         self.end_points = end_points
 
