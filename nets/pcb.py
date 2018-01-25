@@ -1,5 +1,5 @@
 import tensorflow as tf
-
+import pdb
 
 slim = tf.contrib.slim
 
@@ -53,6 +53,7 @@ def pcb_net(inputs,
             logits.append(logits_part)
             end_points["predictions_%s" % i] = slim.softmax(logits_part,
                                                             scope="predictions")
+        pdb.set_trace()
 
     vector_h_concat = tf.concat([v for v in vector_h], axis=1)
     vector_g_concat = tf.concat([g for g in vector_g], axis=1)
