@@ -159,7 +159,10 @@ class SubResNet(BaseModel):
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
         self.logits = end_points["Logits"]
-        self.pred = end_points['predictions']
+        # self.pred = end_points['predictions']
+        self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
+            end_points['predictions_2'],end_points['predictions_3'],
+            end_points['predictions_4'],end_points['predictions_5']])
         self.end_points = end_points
 
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.logits,1))
