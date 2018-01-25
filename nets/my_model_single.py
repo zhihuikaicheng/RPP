@@ -6,6 +6,7 @@ import tensorflow as tf
 import pdb
 
 from nets import resnet_v2
+from nets import pcb
 
 FLAGS = tf.app.flags.FLAGS
 slim = tf.contrib.slim
