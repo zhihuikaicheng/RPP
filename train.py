@@ -342,9 +342,9 @@ class Trainer(object):
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=True,
             scope='resnet_v2_50',
-            global_pool=True,
+            global_pool=False,
             output_stride=None,
-            spatial_squeeze=True,
+            spatial_squeeze=False,
             reuse=None
         )
         self.network = network
