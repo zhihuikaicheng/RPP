@@ -158,14 +158,14 @@ class SubResNet(BaseModel):
             )
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
-        self.logits = tf.reduce_mean(end_points["Logits"], axis=0)
+        self.logits = end_points["Logits"]
         # self.pred = end_points['predictions']
         self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
             end_points['predictions_2'],end_points['predictions_3'],
             end_points['predictions_4'],end_points['predictions_5']], axis=0)
         self.end_points = end_points
 
-        corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.logits,1))
+        corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.pred,1))
         self.acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
 
         for end_point in self.end_points:
@@ -176,7 +176,9 @@ class SubResNet(BaseModel):
         tf.summary.scalar('acc/%s' % self.acc, self.acc)
 
     def init_loss(self):
-        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.pred+FLAGS.opt_epsilon), axis=1)
+        cross_entropy = 0.0
+        for i in range(len(self.logits)):
+            cross_entropy += -tf.reduce_sum(self.label*tf.log(end_points["predictions_%s" % i]+FLAGS.opt_epsilon), axis=1)
         self.loss = tf.reduce_mean(cross_entropy)
 
         tf.summary.scalar('losses/%s' % self.scope, self.loss)
