@@ -158,7 +158,7 @@ class SubResNet(BaseModel):
             )
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
-        self.logits = end_points["Logits"]
+        self.logits = tf.reduce_mean(end_points["Logits"])
         # self.pred = end_points['predictions']
         self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
             end_points['predictions_2'],end_points['predictions_3'],
@@ -201,7 +201,6 @@ class SubResNet(BaseModel):
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
             if name.startswith('resnet_v2_50/logits') or name.startswith('pcb'):
-                print ('yys')
                 continue
             d[name] = var
 
