@@ -190,8 +190,9 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            # if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
-            #     continue
+            if name.startswith('resnet_v2_50/logits'):
+                print ('yys')
+                continue
             d[name] = var
 
         saver = tf.train.Saver(d)
