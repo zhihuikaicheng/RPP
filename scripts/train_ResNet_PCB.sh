@@ -28,7 +28,7 @@ python train.py \
 --weight_decay=0.00004 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=2
+--GPU_use=1
 
 # python train_inception_single.py \
 # --learning_rate=5e-5 \
