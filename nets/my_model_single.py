@@ -143,7 +143,6 @@ class SubResNet(BaseModel):
 
         net, end_points = resnet_v2.resnet_v2_50(
             x,
-            num_classes=self.num_classes,
             is_training=self.is_training,
             global_pool=self.global_pool,
             output_stride=self.output_stride,
@@ -160,7 +159,6 @@ class SubResNet(BaseModel):
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
         self.logits = end_points["Logits"]
-        pdb.set_trace()
         self.pred = end_points['predictions']
         self.end_points = end_points
 
