@@ -31,29 +31,30 @@ def pcb_net(inputs,
     vector_g = []  # arfter avg pool
     vector_h = []  # after 1*1 conv
     logits = []
-    for i in range(len(branches)):
-        branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
-                                keep_dims=True)
-        fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
-                               [1, 1], stride=1,
-                               activation_fn=None,
-                               normalizer_fn=None,
-                               scope="feature_%s" % i)
-        net = slim.flatten(fc5_part)
-        if num_classes < 5000:
-            net = slim.dropout(net, keep_prob=0.8)
-        vector_h.append(net)
-        vector_g.append(slim.flatten(branch))
+    with tf.variable_scope('pcb'):
+        for i in range(len(branches)):
+            branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
+                                    keep_dims=True)
+            fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
+                                   [1, 1], stride=1,
+                                   activation_fn=None,
+                                   normalizer_fn=None,
+                                   scope="feature_%s" % i)
+            net = slim.flatten(fc5_part)
+            if num_classes < 5000:
+                net = slim.dropout(net, keep_prob=0.8)
+            vector_h.append(net)
+            vector_g.append(slim.flatten(branch))
 
-        if is_training:
-            logits_part = slim.fully_connected(net,
-                                               num_classes,
-                                               activation_fn=None,
-                                               scope="logits_%s" % i)
-            logits.append(logits_part)
-            end_points["predictions_%s" % i] = slim.softmax(logits_part,
-                                                            scope="predictions")
-    pdb.set_trace()
+            if is_training:
+                logits_part = slim.fully_connected(net,
+                                                   num_classes,
+                                                   activation_fn=None,
+                                                   scope="logits_%s" % i)
+                logits.append(logits_part)
+                end_points["predictions_%s" % i] = slim.softmax(logits_part,
+                                                                scope="predictions")
+        pdb.set_trace()
 
     vector_h_concat = tf.concat([v for v in vector_h], axis=1)
     vector_g_concat = tf.concat([g for g in vector_g], axis=1)
