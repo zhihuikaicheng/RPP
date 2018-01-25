@@ -30,6 +30,48 @@ python train.py \
 --scale_width=128 \
 --GPU_use=1
 
+python train.py \
+--learning_rate=5e-5 \
+--learning_rate_decay_type=fixed \
+--dataset_name=Market_1501 \
+--dataset_split_name=train \
+--dataset_dir=${OUTPUT_DIR} \
+--batch_size=8 \
+--max_number_of_steps=60000 \
+--checkpoint_dir=${TRAIN_DIR} \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
+--log_dir=${LOG_DIR} \
+--save_model_summary_secs=300 \
+--log_every_n_steps=100 \
+--optimizer=adam \
+--adam_beta1=0.5 \
+--adam_beta2=0.999 \
+--weight_decay=0.00004 \
+--scale_height=384 \
+--scale_width=128 \
+--GPU_use=1
+
+python train.py \
+--learning_rate=1e-5 \
+--learning_rate_decay_type=fixed \
+--dataset_name=Market_1501 \
+--dataset_split_name=train \
+--dataset_dir=${OUTPUT_DIR} \
+--batch_size=8 \
+--max_number_of_steps=100000 \
+--checkpoint_dir=${TRAIN_DIR} \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
+--log_dir=${LOG_DIR} \
+--save_model_summary_secs=300 \
+--log_every_n_steps=100 \
+--optimizer=adam \
+--adam_beta1=0.5 \
+--adam_beta2=0.999 \
+--weight_decay=0.00004 \
+--scale_height=384 \
+--scale_width=128 \
+--GPU_use=1
+
 # python train_inception_single.py \
 # --learning_rate=5e-5 \
 # --learning_rate_decay_type=fixed \
