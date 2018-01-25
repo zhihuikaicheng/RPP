@@ -162,7 +162,7 @@ class SubResNet(BaseModel):
         # self.pred = end_points['predictions']
         self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
             end_points['predictions_2'],end_points['predictions_3'],
-            end_points['predictions_4'],end_points['predictions_5']])
+            end_points['predictions_4'],end_points['predictions_5']], axis=0)
         self.end_points = end_points
         pdb.set_trace()
 
