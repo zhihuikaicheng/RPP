@@ -158,7 +158,7 @@ class SubResNet(BaseModel):
             )
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
-        self.logits = tf.reduce_mean(end_points["Logits"], axis=2)
+        self.logits = tf.reduce_mean(end_points["Logits"], axis=0)
         # self.pred = end_points['predictions']
         self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
             end_points['predictions_2'],end_points['predictions_3'],
