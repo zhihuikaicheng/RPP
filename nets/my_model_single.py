@@ -164,7 +164,6 @@ class SubResNet(BaseModel):
             end_points['predictions_2'],end_points['predictions_3'],
             end_points['predictions_4'],end_points['predictions_5']], axis=0)
         self.end_points = end_points
-        pdb.set_trace()
 
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.logits,1))
         self.acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
