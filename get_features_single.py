@@ -16,7 +16,6 @@ from deployment import model_deploy
 from nets import my_model_single as my_model
 
 # jh-future:it needs to be add to tf.app.flags
-os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.GPU_use
 
 slim = tf.contrib.slim
 
@@ -146,6 +145,8 @@ tf.app.flags.DEFINE_string(
   'log_dir', None, 'dir of summar')
 
 FLAGS = tf.app.flags.FLAGS
+
+os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.GPU_use
 
 class Get_feature(object):
     def __init__(self):
