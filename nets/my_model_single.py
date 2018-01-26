@@ -144,6 +144,7 @@ class SubResNet(BaseModel):
         # x = tf.multiply(x, 2.0)
         x = vgg_preprocessing.preprocess_image(x, self.height, self.width, self.is_training)
 
+        pdb.set_trace()
         net, end_points = resnet_v2.resnet_v2_50(
             x,
             is_training=self.is_training,
