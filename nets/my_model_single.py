@@ -7,7 +7,6 @@ import pdb
 
 from nets import resnet_v2
 from nets import pcb
-from preprocessing import vgg_preprocessing
 
 FLAGS = tf.app.flags.FLAGS
 slim = tf.contrib.slim
@@ -138,13 +137,11 @@ class SubResNet(BaseModel):
 
     def init_network(self):
         x = self.image
-        # x = tf.image.resize_images(x, [self.size,self.size], 0) #0 mean bilinear
-        # x = tf.image.resize_images(x, [self.height, self.width], 0)
-        # x = tf.subtract(x, 0.5)
-        # x = tf.multiply(x, 2.0)
-        x = vgg_preprocessing.preprocess_image(x, self.height, self.width, self.is_training)
-
-        pdb.set_trace()
+        x = tf.image.resize_images(x, [self.size,self.size], 0) #0 mean bilinear
+        x = tf.image.resize_images(x, [self.height, self.width], 0)
+        x = tf.subtract(x, 0.5)
+        x = tf.multiply(x, 2.0)
+        
         net, end_points = resnet_v2.resnet_v2_50(
             x,
             is_training=self.is_training,

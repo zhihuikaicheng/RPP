@@ -9,6 +9,7 @@ import time
 import re
 
 from deployment import model_deploy
+from preprocessing import inception_preprocessing
 
 from nets import my_model_single as my_model
 
