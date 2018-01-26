@@ -58,13 +58,15 @@ def pcb_net(inputs,
 
     vector_h_concat = tf.concat([v for v in vector_h], axis=1)
     vector_g_concat = tf.concat([g for g in vector_g], axis=1)
-    if not is_training:
-        if output_layer == "g":
-            return vector_g_concat
-        else:
-            return vector_h_concat
+    # if not is_training:
+    #     if output_layer == "g":
+    #         return vector_g_concat
+    #     else:
+    #         return vector_h_concat
 
     end_points["Logits"] = logits
-    end_points["fc5"] = vector_h_concat
+    # end_points["fc5"] = vector_h_concat
+    end_points["h"] = vector_h_concat
+    end_points["g"] = vector_h_concat
     net = logits
     return net, end_points
