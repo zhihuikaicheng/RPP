@@ -343,7 +343,7 @@ class Trainer(object):
             is_training=True,
             scope='resnet_v2_50',
             global_pool=False,
-            output_stride=None,
+            output_stride=4,
             spatial_squeeze=False,
             reuse=None
         )
