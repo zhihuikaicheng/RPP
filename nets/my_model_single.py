@@ -139,7 +139,7 @@ class SubResNet(BaseModel):
     def init_network(self):
         x = self.image
         # x = tf.image.resize_images(x, [self.size,self.size], 0) #0 mean bilinear
-        x = tf.image.resize_images(x, [self.height, self.width], 0)
+        # x = tf.image.resize_images(x, [self.height, self.width], 0)
         # x = tf.subtract(x, 0.5)
         # x = tf.multiply(x, 2.0)
         x = vgg_preprocessing.preprocess_image(x, self.height, self.width, self.is_training)
