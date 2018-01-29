@@ -6,6 +6,7 @@ import tensorflow as tf
 import pdb
 
 from nets import resnet_v2
+from nets import resnet_v1
 from nets import pcb
 
 FLAGS = tf.app.flags.FLAGS
@@ -35,7 +36,7 @@ class MyResNet(BaseModel):
 
         with tf.variable_scope(scope):
             self.init_input()
-            with slim.arg_scope(resnet_v2.resnet_arg_scope()):
+            with slim.arg_scope(resnet_v1.resnet_arg_scope()):
                 self.init_network()
             self.init_loss()
 
@@ -142,14 +143,14 @@ class SubResNet(BaseModel):
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
         
-        net, end_points = resnet_v2.resnet_v2_50(
+        net, end_points = resnet_v1.resnet_v1_50(
             x,
             is_training=self.is_training,
             global_pool=self.global_pool,
             output_stride=self.output_stride,
             spatial_squeeze=self.spatial_squeeze,
             reuse=self.reuse,
-            scope='resnet_v2_50'
+            scope='resnet_v1_50'
         )
 
         net, end_points = pcb.pcb_net(
@@ -206,7 +207,7 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('resnet_v2_50/logits') or name.startswith('pcb'):
+            if name.startswith('resnet_v1_50/logits') or name.startswith('pcb'):
                 continue
             d[name] = var
 
