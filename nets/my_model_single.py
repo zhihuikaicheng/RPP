@@ -148,7 +148,7 @@ class SubResNet(BaseModel):
             global_pool=self.global_pool,
             output_stride=self.output_stride,
             spatial_squeeze=self.spatial_squeeze,
-            num_classes=self.num_classes,
+            num_classes=None,
             reuse=self.reuse,
             scope='resnet_v2_50'
         )
@@ -161,6 +161,8 @@ class SubResNet(BaseModel):
             self.num_classes,
             feature_dim=2048
             )
+
+        pdb.set_trace()
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
         self.logits = end_points["Logits"]
