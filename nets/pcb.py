@@ -33,8 +33,10 @@ def pcb_net(inputs,
     logits = []
     with tf.variable_scope('pcb'):
         for i in range(len(branches)):
+            pdb.set_trace()
             branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
                                     keep_dims=True)
+            pdb.set_trace()
             fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
                                    [1, 1], stride=1,
                                    activation_fn=None,

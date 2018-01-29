@@ -152,12 +152,11 @@ class SubResNet(BaseModel):
             scope='resnet_v2_50'
         )
 
-        pdb.set_trace()
-
         net, end_points = pcb.pcb_net(
             net,
             end_points,
-            self.num_classes
+            self.num_classes,
+            feature_dim=2048
             )
 
         pdb.set_trace()
