@@ -5,7 +5,7 @@ from __future__ import print_function
 import tensorflow as tf
 import pdb
 
-from nets import resnet_v2
+from nets import resnet_v1
 from nets import pcb
 
 FLAGS = tf.app.flags.FLAGS
@@ -35,7 +35,7 @@ class MyResNet(BaseModel):
 
         with tf.variable_scope(scope):
             self.init_input()
-            with slim.arg_scope(resnet_v2.resnet_arg_scope()):
+            with slim.arg_scope(resnet_v1.resnet_arg_scope()):
                 self.init_network()
             self.init_loss()
 
@@ -142,16 +142,14 @@ class SubResNet(BaseModel):
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
-        pdb.set_trace()
-        
-        net, end_points = resnet_v2.resnet_v2_50(
+        net, end_points = resnet_v1.resnet_v1_50(
             x,
             is_training=self.is_training,
             global_pool=self.global_pool,
             output_stride=self.output_stride,
             spatial_squeeze=self.spatial_squeeze,
             reuse=self.reuse,
-            scope='resnet_v2_50'
+            scope='resnet_v1_50'
         )
 
         pdb.set_trace()
@@ -163,7 +161,7 @@ class SubResNet(BaseModel):
             feature_dim=2048
             )
 
-        # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
+        # self.logits = end_points['resnet_v1_50/branch_0/resnet_v1_50/spatial_squeeze']
         self.logits = end_points["Logits"]
         # self.pred = end_points['predictions']
         self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
@@ -191,15 +189,15 @@ class SubResNet(BaseModel):
 
     def load_pretrain_model(self, sess, path, father_scope):
         '''
-        in pretrain, name like:InceptionV3/Mixed_7b/Branch_2/Conv2d_0d_3x1/weights
-        in our model, name like:inception_v3/branch_0/InceptionV3/Mixed_7b/Branch_2/Conv2d_0d_3x1/weights:0
+        in pretrain, name like:InceptionV3/Mixed_7b/Branch_2/Conv1d_0d_3x1/weights
+        in our model, name like:inception_v3/branch_0/InceptionV3/Mixed_7b/Branch_2/Conv1d_0d_3x1/weights:0
         so, model_name = inception_v3/branch_0/ + pretrain_name + ':0'
                        = father_scope/sub_model_scope/pretrain_name:0
 
         note:
         some vars can't be load like final-fc
-        in pretrain, name of these vars like:InceptionV3/AuxLogits/Conv2d_2b_1x1/biases
-                                             InceptionV3/Logits/Conv2d_2b_1x1/biases
+        in pretrain, name of these vars like:InceptionV3/AuxLogits/Conv1d_2b_1x1/biases
+                                             InceptionV3/Logits/Conv1d_2b_1x1/biases
         they all have prefix like InceptionV3/AuxLogits/ or InceptionV3/Logits/
         '''
         scope = father_scope + '/' + self.scope + '/'
@@ -208,7 +206,7 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('resnet_v2_50/logits') or name.startswith('pcb'):
+            if name.startswith('resnet_v1_50/logits') or name.startswith('pcb'):
                 continue
             d[name] = var
 
