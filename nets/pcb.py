@@ -33,16 +33,20 @@ def pcb_net(inputs,
     logits = []
     with tf.variable_scope('pcb'):
         for i in range(len(branches)):
+            pdb.set_trace()
             branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
                                     keep_dims=True)
+            pdb.set_trace()
             fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
                                    [1, 1], stride=1,
                                    activation_fn=None,
                                    normalizer_fn=None,
                                    scope="feature_%s" % i)
             net = slim.flatten(fc5_part)
+            pdb.set_trace()
             if num_classes < 5000:
                 net = slim.dropout(net, keep_prob=0.8)
+            pdb.set_trace()
             vector_h.append(net)
             vector_g.append(slim.flatten(branch))
 
@@ -55,7 +59,6 @@ def pcb_net(inputs,
                 end_points["predictions_%s" % i] = slim.softmax(logits_part,
                                                                 scope="predictions")
         # pdb.set_trace()
-    pdb.set_trace()
 
     vector_h_concat = tf.concat([v for v in vector_h], axis=1)
     vector_g_concat = tf.concat([g for g in vector_g], axis=1)
