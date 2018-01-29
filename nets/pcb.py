@@ -11,7 +11,9 @@ def pcb_net(inputs,
             use_asoftmax=False,
             num_parts=6,
             output_layer="h",
-            is_training=True):
+            is_training=True,
+            only_pcb=True,
+            only_classifier=False):
     """
     spilt net (before global avrage pooling) to multi-branch for training
     for resnet_v1_50, set output_stride=4 ensure feature map size
@@ -31,8 +33,14 @@ def pcb_net(inputs,
     vector_g = []  # arfter avg pool
     vector_h = []  # after 1*1 conv
     logits = []
+    shape = tf.shape()
+    with tf.variable_scope('part_classifier'):
+        refined_part = slim.conv2d(inputs, num_parts, [1, 1], 
+                                    stride=1, activation_fn=None,
+                                    normalizer_fn=None, scope="refined_part")
+
     with tf.variable_scope('pcb'):
-        for i in range(len(branches)):
+        for i in range(num_parts):
             branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
                                     keep_dims=True)
             fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
