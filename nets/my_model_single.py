@@ -141,6 +141,8 @@ class SubResNet(BaseModel):
         x = tf.image.resize_images(x, [self.height, self.width], 0)
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
+
+        pdb.set_trace()
         
         net, end_points = resnet_v2.resnet_v2_50(
             x,
