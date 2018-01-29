@@ -209,6 +209,8 @@ def resnet_v2(inputs,
         end_points = slim.utils.convert_collection_to_dict(
             end_points_collection)
 
+        pdb.set_trace()
+
         if global_pool:
           # Global average pooling.
           net = tf.reduce_mean(net, [1, 2], name='pool5', keep_dims=True)
