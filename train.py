@@ -340,11 +340,11 @@ class Trainer(object):
         # jh-future:sizes can be add into tf.app.flags
         network = my_model.MyResNet(
             FLAGS.num_classes-FLAGS.labels_offset,
-            [FLAGS.scale_height, FLAGS.scale_width],
+            [224, 224],
             is_training=True,
             scope='resnet_v2_50',
             global_pool=False,
-            output_stride=None,
+            output_stride=4,
             spatial_squeeze=False,
             reuse=None
         )
