@@ -148,6 +148,7 @@ class SubResNet(BaseModel):
             global_pool=self.global_pool,
             output_stride=self.output_stride,
             spatial_squeeze=self.spatial_squeeze,
+            num_classes=self.num_classes,
             reuse=self.reuse,
             scope='resnet_v2_50'
         )
