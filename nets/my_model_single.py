@@ -153,8 +153,6 @@ class SubResNet(BaseModel):
             scope='resnet_v2_50'
         )
 
-        pdb.set_trace()
-
         net, end_points = pcb.pcb_net(
             net,
             end_points,
@@ -162,7 +160,7 @@ class SubResNet(BaseModel):
             feature_dim=2048
             )
 
-        pdb.set_trace()
+        # pdb.set_trace()
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
         self.logits = end_points["Logits"]
