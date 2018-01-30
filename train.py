@@ -427,7 +427,7 @@ class Trainer(object):
                 self.network.label:batch[1]
             }
             # calc_obj
-            if FLAGES.only_classifier:
+            if FLAGE.only_classifier:
                 calc_obj = [self.train_op_only_classifier, 
                     self.network.sub_models[0].loss, self.network.sub_models[0].acc]
             else:
