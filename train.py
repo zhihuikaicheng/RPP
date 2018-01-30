@@ -156,6 +156,10 @@ tf.app.flags.DEFINE_integer('scale_width', 128, 'size of scale in single model')
 
 tf.app.flags.DEFINE_string('GPU_use', 0, 'number of GPU to use')
 
+tf.app.flags.DEFINE_bool('only_pcb', True, 'only train pcb')
+
+tf.app.flags.DEFINE_bool('only_classifier', False, 'only train classifier')
+
 #####################
 # Dir Flags #
 #####################
@@ -365,6 +369,11 @@ class Trainer(object):
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
 
+        variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/part_classifier')]
+        bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]
+        grad_only_classifier = tf.gradients(self.network.loss, variables_only_classifier)
+        self.train_op_only_classifier = [self.optimizer.apply_gradients(zip(grad_only_classifier, variables_only_classifier))] + bn_op_only_classifier
+
     def train(self):
         # sess
         sess_config = tf.ConfigProto()
@@ -418,8 +427,13 @@ class Trainer(object):
                 self.network.label:batch[1]
             }
             # calc_obj
-            calc_obj = [self.train_op, 
-            	self.network.sub_models[0].loss, self.network.sub_models[0].acc]
+            if only_classifier:
+                calc_obj = [self.train_op_only_classifier, 
+                    self.network.sub_models[0].loss, self.network.sub_models[0].acc]
+            else:
+                calc_obj = [self.train_op, 
+                	self.network.sub_models[0].loss, self.network.sub_models[0].acc]
+            
             if timeout:
                 calc_obj.append(self.summary_op)
 

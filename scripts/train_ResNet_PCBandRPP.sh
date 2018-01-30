@@ -29,7 +29,7 @@ python train.py \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=3 \
---only_pcb=True \
+--only_pcb=False \
 --only_classifier=False
 
 python train.py \
@@ -52,7 +52,7 @@ python train.py \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=3 \
---only_pcb=True \
+--only_pcb=False \
 --only_classifier=False
 
 python train.py \
@@ -75,5 +75,5 @@ python train.py \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=3 \
---only_pcb=True \
+--only_pcb=False \
 --only_classifier=False
