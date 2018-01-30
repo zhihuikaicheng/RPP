@@ -33,11 +33,11 @@ def pcb_net(inputs,
     logits = []
 
     # RPP
+    with tf.variable_scope('part_classifier'):
+        refined_part = slim.conv2d(inputs, num_parts, [1, 1], 
+                                    stride=1, activation_fn=None,
+                                    normalizer_fn=None, scope="refined_part")
     if not only_pcb:
-        with tf.variable_scope('part_classifier'):
-            refined_part = slim.conv2d(inputs, num_parts, [1, 1], 
-                                        stride=1, activation_fn=None,
-                                        normalizer_fn=None, scope="refined_part")
         tmp_inputs = tf.expend_dims(tmp_inputs, axis=-1)
         refined_part = tf.expend_dims(refined_part, axis=-2)
         tmp_res = tmp_inputs * refined_part
