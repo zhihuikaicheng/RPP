@@ -38,8 +38,8 @@ def pcb_net(inputs,
                                     stride=1, activation_fn=None,
                                     normalizer_fn=None, scope="refined_part")
     if not only_pcb:
-        tmp_inputs = tf.expend_dims(tmp_inputs, axis=-1)
-        refined_part = tf.expend_dims(refined_part, axis=-2)
+        tmp_inputs = tf.expand_dims(tmp_inputs, axis=-1)
+        refined_part = tf.expand_dims(refined_part, axis=-2)
         tmp_res = tmp_inputs * refined_part
         branches = tf.unstack(tmp_res, axis=-1)
     else:
