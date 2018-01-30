@@ -24,7 +24,7 @@ python get_features_single.py \
 --ckpt_num=58709 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=5
+--GPU_use=4
 
 python get_features_single.py \
 --dataset_name=Market_1501 \
@@ -39,7 +39,7 @@ python get_features_single.py \
 --ckpt_num=92482 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=5
+--GPU_use=4
 
 python get_features_single.py \
 --dataset_name=Market_1501 \
@@ -54,4 +54,4 @@ python get_features_single.py \
 --ckpt_num=98943 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=5
+--GPU_use=4
