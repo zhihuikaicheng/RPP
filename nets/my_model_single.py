@@ -208,7 +208,7 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('resnet_v2_50/logits') or name.startswith('pcb'):
+            if name.startswith('resnet_v2_50/logits') or name.startswith('pcb') or name.startswith('part_classifier'):
                 continue
             d[name] = var
 
