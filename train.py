@@ -375,6 +375,10 @@ class Trainer(object):
             print (var)
             print ('--------------------------')
         bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]
+        for var in bn_op_only_classifier:
+            print ('**************************')
+            print (var)
+            print ('**************************')
         grad_only_classifier = tf.gradients(self.network.loss, variables_only_classifier)
         self.train_op_only_classifier = [self.optimizer.apply_gradients(zip(grad_only_classifier, variables_only_classifier))] + bn_op_only_classifier
 
