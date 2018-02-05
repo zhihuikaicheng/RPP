@@ -39,7 +39,7 @@ python train.py \
 --dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --batch_size=8 \
---max_number_of_steps=180000 \
+--max_number_of_steps=160000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
@@ -62,7 +62,7 @@ python train.py \
 --dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --batch_size=8 \
---max_number_of_steps=220000 \
+--max_number_of_steps=180000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
