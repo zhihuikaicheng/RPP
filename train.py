@@ -370,15 +370,7 @@ class Trainer(object):
         self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
 
         variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/part_classifier')]
-        # for var in variables_only_classifier:
-        #     print ('--------------------------')
-        #     print (var)
-        #     print ('--------------------------')
         bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]
-        # for var in bn_op_only_classifier:
-        #     print ('**************************')
-        #     print (var)
-        #     print ('**************************')
         grad_only_classifier = tf.gradients(self.network.loss, variables_only_classifier)
         self.train_op_only_classifier = [self.optimizer.apply_gradients(zip(grad_only_classifier, variables_only_classifier))] + bn_op_only_classifier
 
@@ -488,6 +480,17 @@ class Trainer(object):
                     tmp_saver = tf.train.Saver(tmp_d)
                     self.saver = tmp_saver
 
+                elif max_num <= 120000:
+                    tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+                    tmp_d = {}
+                    for var in tmp_vars:
+                        name = var.name.replace(':0', '')
+                        if name.endswith('Adam') or name.endswith('Adam_1'):
+                            continue
+                        tmp_d[name] = var
+                    tmp_saver = tf.train.Saver(tmp_d)
+                    self.saver = tmp_saver
+                
                 self.saver.restore(self.sess, os.path.join(FLAGS.checkpoint_dir, 'model.ckpt-{}'.format(max_num)))
                 print("[zkc]use checkpoint-{} weights".format(max_num))
                 return max_num
