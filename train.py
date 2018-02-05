@@ -485,7 +485,7 @@ class Trainer(object):
                     tmp_d = {}
                     for var in tmp_vars:
                         name = var.name.replace(':0', '')
-                        if name.endswith('Adam') or name.endswith('Adam_1'):
+                        if name.endswith('Adam') or name.endswith('Adam_1') or name.endswith('refined_part/biases'):
                             continue
                         tmp_d[name] = var
                     tmp_saver = tf.train.Saver(tmp_d)
