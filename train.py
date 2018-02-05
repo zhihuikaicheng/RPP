@@ -484,12 +484,12 @@ class Trainer(object):
                         name = var.name
                         if name.startswith('resnet_v2_50/branch_0/part_classifier'):
                             continue
-                        d[name] = var
+                        tmp_d[name] = var
                     tmp_saver = tf.train.Saver(tmp_d)
                     self.saver = tmp_saver
 
                 self.saver.restore(self.sess, os.path.join(FLAGS.checkpoint_dir, 'model.ckpt-{}'.format(max_num)))
-                print("[JH]use checkpoint-{} weights".format(max_num))
+                print("[zkc]use checkpoint-{} weights".format(max_num))
                 return max_num
         if os.path.exists(FLAGS.pretrain_path):
             self.network.load_pretrain_model(self.sess, FLAGS.pretrain_path)
