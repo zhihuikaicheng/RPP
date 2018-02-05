@@ -481,7 +481,7 @@ class Trainer(object):
                     tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
                     tmp_d = {}
                     for var in tmp_vars:
-                        name = var.name
+                        name = var.name.replace(':0', '')
                         if name.startswith('resnet_v2_50/branch_0/part_classifier'):
                             continue
                         tmp_d[name] = var
