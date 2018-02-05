@@ -450,6 +450,8 @@ class Trainer(object):
 
             # save model and summary
             if timeout:
+                saver = tf.train.Saver()
+                self.saver = saver
                 save_path = os.path.join(FLAGS.checkpoint_dir,'model.ckpt')
                 self.saver.save(self.sess, save_path, global_step=i)
                 self.summary_writer.add_summary(calc_ans[3], global_step=i)
