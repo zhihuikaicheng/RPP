@@ -128,6 +128,10 @@ tf.app.flags.DEFINE_integer('scale_width', 128, 'size of scale in single model')
 
 tf.app.flags.DEFINE_string('GPU_use', 0, 'number of GPU to use')
 
+tf.app.flags.DEFINE_bool('only_pcb', True, 'only train pcb')
+
+tf.app.flags.DEFINE_bool('only_classifier', False, 'only train classifier')
+
 tf.app.flags.DEFINE_integer(
     'ckpt_num', None, 'The number of ckpt model.')
 
