@@ -24,7 +24,9 @@ python get_features_rpp.py \
 --ckpt_num=143185 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=4
+--GPU_use=4 \
+--only_pcb=False \
+--only_classifier=False
 
 python get_features_rpp.py \
 --dataset_name=Market_1501 \
@@ -39,7 +41,9 @@ python get_features_rpp.py \
 --ckpt_num=151229 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=4
+--GPU_use=4 \
+--only_pcb=False \
+--only_classifier=False
 
 python get_features_rpp.py \
 --dataset_name=Market_1501 \
@@ -54,4 +58,6 @@ python get_features_rpp.py \
 --ckpt_num=158111 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=4
+--GPU_use=4 \
+--only_pcb=False \
+--only_classifier=False
