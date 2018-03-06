@@ -32,9 +32,9 @@
 # --cam_probe_path=/home/yuanziyi/RPP_kc/RPP/158111/queryCAM.mat 
 
 python eval.py \
---label_gallery_path=/home/yuanziyi/RPP_kc/RPP/178580/test_gallery_labels.mat \
---feature_gallery_path=/home/yuanziyi/RPP_kc/RPP/178580/test_gallery_features.mat \
---label_probe_path=/home/yuanziyi/RPP_kc/RPP/178580/test_probe_labels.mat \
---feature_probe_path=/home/yuanziyi/RPP_kc/RPP/178580/test_probe_features.mat \
---cam_gallery_path=/home/yuanziyi/RPP_kc/RPP/178580/testCAM.mat \
---cam_probe_path=/home/yuanziyi/RPP_kc/RPP/178580/queryCAM.mat 
+--label_gallery_path=/home/yuanziyi/RPP_kc/RPP/119142/test_gallery_labels.mat \
+--feature_gallery_path=/home/yuanziyi/RPP_kc/RPP/119142/test_gallery_features.mat \
+--label_probe_path=/home/yuanziyi/RPP_kc/RPP/119142/test_probe_labels.mat \
+--feature_probe_path=/home/yuanziyi/RPP_kc/RPP/119142/test_probe_features.mat \
+--cam_gallery_path=/home/yuanziyi/RPP_kc/RPP/119142/testCAM.mat \
+--cam_probe_path=/home/yuanziyi/RPP_kc/RPP/119142/queryCAM.mat 
