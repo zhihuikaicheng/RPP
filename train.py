@@ -482,7 +482,7 @@ class Trainer(object):
                     tmp_saver = tf.train.Saver(tmp_d)
                     self.saver = tmp_saver
 
-                elif max_num <= 120000:
+                elif max_num <= 140000:
                     tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
                     tmp_d = {}
                     for var in tmp_vars:
