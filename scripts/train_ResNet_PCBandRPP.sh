@@ -2,7 +2,7 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/world/data-gpu-94/sysu-reid/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_PCB_and_RPP
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_PCB_and_RPP_v2
 # Where the dataset is saved to.
 DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 # WHere the log is saved to
