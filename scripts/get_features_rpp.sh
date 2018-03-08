@@ -58,7 +58,7 @@ python get_features_rpp.py \
 --ckpt_num=137587 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=4 \
+--GPU_use=7 \
 --only_pcb=False \
 --only_classifier=True
 
@@ -75,6 +75,6 @@ python get_features_rpp.py \
 --ckpt_num=199230 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=4 \
+--GPU_use=7 \
 --only_pcb=False \
 --only_classifier=False
