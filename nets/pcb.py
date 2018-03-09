@@ -46,7 +46,6 @@ def pcb_net(inputs,
         refined_part = tf.expand_dims(refined_part, axis=-2)
         tmp_res = tmp_inputs * refined_part
         branches = tf.unstack(tmp_res, axis=-1)
-        pdb.set_trace()
     else:
         branches = tf.split(inputs, num_parts, axis=1)
 
@@ -87,5 +86,6 @@ def pcb_net(inputs,
     # end_points["fc5"] = vector_h_concat
     end_points["h"] = vector_h_concat
     end_points["g"] = vector_h_concat
+    end_points["refined_part"] = refined_part
     net = logits
     return net, end_points

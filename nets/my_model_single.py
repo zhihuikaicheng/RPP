@@ -161,7 +161,7 @@ class SubResNet(BaseModel):
             only_pcb=FLAGS.only_pcb
             )
 
-        # pdb.set_trace()
+        pdb.set_trace()
 
         # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
         self.logits = end_points["Logits"]
