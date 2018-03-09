@@ -338,9 +338,11 @@ class Get_feature(object):
             feed = {
                 self.network.image:batch[0]
             }
-            gallery_calc_obj = [self.network.feature]
+            gallery_calc_obj = [self.network.feature, self.network.end_points["refined_part"]]
 
             gallery_calc_ans = self.sess.run(gallery_calc_obj, feed_dict=feed)
+
+            pdb.set_trace()
 
             gallery_img_features.append(np.squeeze(gallery_calc_ans[0], axis=None))
             gallery_img_label.append(batch[1])
