@@ -41,6 +41,7 @@ def pcb_net(inputs,
         refined_part = slim.conv2d(inputs, num_parts, [1, 1], 
                                     stride=1, activation_fn=None,
                                     normalizer_fn=None, scope="refined_part")
+        end_points["refined_part"] = refined_part
     if not only_pcb:
         tmp_inputs = tf.expand_dims(inputs, axis=-1)
         refined_part = tf.expand_dims(refined_part, axis=-2)
@@ -86,6 +87,5 @@ def pcb_net(inputs,
     # end_points["fc5"] = vector_h_concat
     end_points["h"] = vector_h_concat
     end_points["g"] = vector_h_concat
-    end_points["refined_part"] = refined_part
     net = logits
     return net, end_points
