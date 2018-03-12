@@ -342,7 +342,7 @@ class Get_feature(object):
 
             gallery_calc_ans = self.sess.run(gallery_calc_obj, feed_dict=feed)
 
-            pdb.set_trace()
+            # pdb.set_trace()
 
             gallery_img_features.append(np.squeeze(gallery_calc_ans[0], axis=None))
             gallery_img_label.append(batch[1])

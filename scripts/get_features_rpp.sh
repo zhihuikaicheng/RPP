@@ -55,12 +55,12 @@ python get_features_rpp.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=105144 \
+--ckpt_num=175799 \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=7 \
 --only_pcb=False \
---only_classifier=True
+--only_classifier=False
 
 python get_features_rpp.py \
 --dataset_name=Market_1501 \
@@ -72,12 +72,12 @@ python get_features_rpp.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=118145 \
+--ckpt_num=188232 \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=7 \
 --only_pcb=False \
---only_classifier=True
+--only_classifier=False
 
 python get_features_rpp.py \
 --dataset_name=Market_1501 \
@@ -89,9 +89,9 @@ python get_features_rpp.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=137678 \
+--ckpt_num=198222 \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=7 \
 --only_pcb=False \
---only_classifier=True
+--only_classifier=False
