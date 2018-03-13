@@ -45,49 +45,11 @@ class MyResNet(BaseModel):
 
     def init_network(self):
         self.sub_models = []
-        # for i,s in enumerate(self.sizes):
-        #     sub_model = SubIncption([self.image,self.label],
-        #         self.num_classes, s, 'branch_{}'.format(i), is_training=self.is_training)
-        #     self.sub_models.append(sub_model)
 
         sub_model = SubResNet([self.image,self.label],
                 self.num_classes, self.height, self.width, 'branch_0', is_training=self.is_training,
                 output_stride=self.output_stride, spatial_squeeze=self.spatial_squeeze, reuse=self.reuse, global_pool=self.global_pool)
         self.sub_models.append(sub_model)
-
-        # if len(self.sizes) > 1:
-        #     joint_scope = 'joint'
-
-        #     with tf.variable_scope(joint_scope):
-        #         self.feature = tf.concat([self.sub_models[0].end_points['AvgPool_1a'],
-        #             self.sub_models[1].end_points['AvgPool_1a']], axis=-1)
-        #         x = tf.concat([model.logits for model in self.sub_models], axis=-1)
-        #         x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
-        #         self.joint_logits = x
-        #         self.joint_pred = tf.nn.softmax(x)
-
-        #         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.joint_logits,1))
-        #         self.joint_acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
-
-        #         self.logits = self.joint_logits
-        #         self.end_points = {}
-        #         for model in self.sub_models:
-        #             for end_point in model.end_points:
-        #                 self.end_points[model.scope+'/'+end_point] = model.end_points[end_point]
-        #         self.end_points[joint_scope+'/Logits'] = self.joint_logits
-        #         self.end_points[joint_scope+'/Predictions'] = self.joint_pred
-
-
-        #     tf.summary.histogram('activations/%s/%s'%(self.scope,'Logits'), self.joint_logits)
-        #     tf.summary.scalar('sparsity/%s/%s'%(self.scope,'Logits'), tf.nn.zero_fraction(self.joint_logits))
-        #     tf.summary.histogram('activations/%s/%s'%(self.scope,'Predictions'), self.joint_pred)
-        #     tf.summary.scalar('sparsity/%s/%s'%(self.scope,'Predictions'), tf.nn.zero_fraction(self.joint_pred))
-
-        #     tf.summary.scalar('acc/%s' % self.scope, self.joint_acc)
-        # else:
-        #     self.logits = self.sub_models[0].logits
-        #     self.end_points = self.sub_models[0].end_points
-        #     self.feature = self.sub_models[0].end_points['AvgPool_1a']
 
         self.logits = self.sub_models[0].logits
         self.end_points = self.sub_models[0].end_points
@@ -95,13 +57,6 @@ class MyResNet(BaseModel):
 
     def init_loss(self):
         cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
-
-        # if len(self.sizes) > 1:
-        #     joint_cross_entropy = -tf.reduce_sum(self.label*tf.log(self.joint_pred+FLAGS.opt_epsilon), axis=1)
-        #     joint_cross_entropy = tf.reduce_mean(joint_cross_entropy)
-        #     cross_entropy = cross_entropy + joint_cross_entropy
-
-        #     tf.summary.scalar('losses/%s_joint' % self.scope, joint_cross_entropy)
 
         regular_vars = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
         regularizers = tf.add_n(regular_vars)
@@ -208,7 +163,6 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            # if name.startswith('resnet_v2_50/logits') or name.startswith('pcb'):
             if name.startswith('resnet_v2_50/logits') or name.startswith('pcb') or name.startswith('part_classifier'):
                 continue
             d[name] = var

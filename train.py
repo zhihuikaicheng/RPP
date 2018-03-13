@@ -121,9 +121,6 @@ tf.app.flags.DEFINE_string(
     'dataset_name', 'imagenet', 'The name of the dataset to load.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_split_name', 'train', 'The name of the train/test split.')
-
-tf.app.flags.DEFINE_string(
     'dataset_dir', None, 'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
@@ -159,6 +156,10 @@ tf.app.flags.DEFINE_string('GPU_use', 0, 'number of GPU to use')
 tf.app.flags.DEFINE_bool('only_pcb', True, 'only train pcb')
 
 tf.app.flags.DEFINE_bool('only_classifier', False, 'only train classifier')
+
+tf.app.flags.DEFINE_integer('max_step_to_train_pcb', 100000, 'The max step you wish pcb to train')
+
+tf.app.flags.DEFINE_integer('max_step_to_train_classifier', 40000, 'The max step you wish refined part classifier to train')
 
 #####################
 # Dir Flags #
@@ -471,7 +472,7 @@ class Trainer(object):
                 pattern = r'model\.ckpt\-(\d+)\.index'
                 nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
                 max_num = max(nums)
-                if max_num <= 100000:
+                if max_num <= FLAGS.max_step_to_train_pcb:
                     tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
                     tmp_d = {}
                     for var in tmp_vars:
@@ -482,7 +483,7 @@ class Trainer(object):
                     tmp_saver = tf.train.Saver(tmp_d)
                     self.saver = tmp_saver
 
-                elif max_num <= 140000:
+                elif max_num <= FLAGS.max_step_to_train_pcb + FLAGS.max_step_to_train_classifier:
                     tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
                     tmp_d = {}
                     for var in tmp_vars:

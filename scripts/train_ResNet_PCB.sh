@@ -13,7 +13,6 @@ python train.py \
 --learning_rate=2e-4 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
---dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --batch_size=8 \
 --max_number_of_steps=20000 \
@@ -30,7 +29,9 @@ python train.py \
 --scale_width=128 \
 --GPU_use=3 \
 --only_pcb=True \
---only_classifier=False
+--only_classifier=False \
+--max_step_to_train_pcb=100000 \
+--max_step_to_train_classifier=40000
 
 python train.py \
 --learning_rate=5e-5 \
@@ -53,13 +54,14 @@ python train.py \
 --scale_width=128 \
 --GPU_use=3 \
 --only_pcb=True \
---only_classifier=False
+--only_classifier=False \
+--max_step_to_train_pcb=100000 \
+--max_step_to_train_classifier=40000
 
 python train.py \
 --learning_rate=1e-5 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
---dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --batch_size=8 \
 --max_number_of_steps=100000 \
@@ -76,4 +78,6 @@ python train.py \
 --scale_width=128 \
 --GPU_use=3 \
 --only_pcb=True \
---only_classifier=False
+--only_classifier=False \
+--max_step_to_train_pcb=100000 \
+--max_step_to_train_classifier=40000
