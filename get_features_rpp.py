@@ -303,7 +303,7 @@ class Get_feature(object):
             feed = {
                 self.network.image:batch[0]
             }
-            probe_calc_obj = [self.network.feature]
+            probe_calc_obj = [self.network.feature, self.network.end_points["refined_part"]]
 
             probe_calc_ans = self.sess.run(probe_calc_obj, feed_dict=feed)
 
