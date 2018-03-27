@@ -370,10 +370,10 @@ class Trainer(object):
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
 
-        variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/part_classifier')]
-        bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]
-        grad_only_classifier = tf.gradients(self.network.loss, variables_only_classifier)
-        self.train_op_only_classifier = [self.optimizer.apply_gradients(zip(grad_only_classifier, variables_only_classifier))] + bn_op_only_classifier
+        # variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/part_classifier')]
+        # bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]
+        # grad_only_classifier = tf.gradients(self.network.loss, variables_only_classifier)
+        # self.train_op_only_classifier = [self.optimizer.apply_gradients(zip(grad_only_classifier, variables_only_classifier))] + bn_op_only_classifier
 
     def train(self):
         # sess
