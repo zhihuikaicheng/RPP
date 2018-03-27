@@ -111,13 +111,14 @@ class SubResNet(BaseModel):
             net = end_points['global_pool']
             net = slim.conv2d(net, 512, [1, 1], stride=1, 
                                 activation_fn=None, normalizer_fn=None)
-            net = slim.batch_norm(net, activation_fn=None)
-            self.feature = net
+            net1 = slim.batch_norm(net, activation_fn=None)
             net = slim.dropout(net, 0.5)
 
             net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
                             activation_fn=None, normalizer_fn=None)
             net = tf.squeeze(net, [1, 2])
+
+        self.feature = net1
             
         self.logits = net
         self.pred = slim.softmax(net)
