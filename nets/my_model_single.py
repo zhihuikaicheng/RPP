@@ -111,7 +111,6 @@ class SubResNet(BaseModel):
         net = slim.conv2d(net, 512, [1, 1], stride=1, 
                             activation_fn=None, normalizer_fn=None)
         net = slim.batch_norm(net, activation_fn=tf.nn.relu)
-        net = 
         net = slim.dropout(net, 0.5)
 
         net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
