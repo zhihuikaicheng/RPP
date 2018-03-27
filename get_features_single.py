@@ -107,9 +107,6 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_integer(
     'batch_size', 32, 'The number of samples in each batch.')
 
-tf.app.flags.DEFINE_integer('max_number_of_steps', None,
-                            'The maximum number of training steps.')
-
 # jh-future:you will need a last_step to restore from any step you like, not just the last step
 
 tf.app.flags.DEFINE_integer('origin_height', 128, 'origin height of image')
@@ -247,8 +244,8 @@ class Get_feature(object):
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=False,
             scope='resnet_v2_50',
-            global_pool=False,
-            output_stride=4,
+            global_pool=True,
+            output_stride=16,
             spatial_squeeze=False,
             reuse=None
         )
