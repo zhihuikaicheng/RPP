@@ -107,13 +107,14 @@ class SubResNet(BaseModel):
             scope='resnet_v2_50'
         )
 
-        net = end_points['global_pool']
-        net = slim.conv2d(net, 512, [1, 1], stride=1, 
-                            activation_fn=None, normalizer_fn=None)
-        net = slim.batch_norm(net, activation_fn=tf.nn.relu)
-        net = slim.dropout(net, 0.5)
+        with tf.variable_scope('finetune'):
+            net = end_points['global_pool']
+            net = slim.conv2d(net, 512, [1, 1], stride=1, 
+                                activation_fn=None, normalizer_fn=None)
+            net = slim.batch_norm(net, activation_fn=tf.nn.relu)
+            net = slim.dropout(net, 0.5)
 
-        net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
+            net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
                             activation_fn=None, normalizer_fn=None)
 
         self.logits = net
@@ -161,7 +162,7 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('resnet_v2_50/logits') or name.startswith('pcb') or name.startswith('part_classifier'):
+            if name.startswith('resnet_v2_50/logits') or name.startswith('pcb') or name.startswith('part_classifier') or name.startswith('finetune'):
                 continue
             d[name] = var
 
