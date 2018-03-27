@@ -118,7 +118,7 @@ class SubResNet(BaseModel):
                             activation_fn=None, normalizer_fn=None)
 
         self.logits = net
-        self.pred = tf.nn.softmax(net)
+        self.pred = slim.softmax(net)
         # self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
         #     end_points['predictions_2'],end_points['predictions_3'],
