@@ -53,7 +53,7 @@ class MyResNet(BaseModel):
 
         self.logits = self.sub_models[0].logits
         self.end_points = self.sub_models[0].end_points
-        self.feature = self.sub_models[0].end_points["h"]
+        # self.feature = self.sub_models[0].end_points["h"]
 
     def init_loss(self):
         cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
