@@ -92,12 +92,11 @@ class SubResNet(BaseModel):
 
     def init_network(self):
         x = self.image
-        # x = tf.image.resize_images(x, [self.size,self.size], 0) #0 mean bilinear
         x = tf.image.resize_images(x, [self.height, self.width], 0)
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
-        net, end_points = resnet_v2.resnet_v2_50(
+        _, end_points = resnet_v2.resnet_v2_50(
             x,
             is_training=self.is_training,
             global_pool=self.global_pool,
@@ -108,22 +107,22 @@ class SubResNet(BaseModel):
             scope='resnet_v2_50'
         )
 
-        net, end_points = pcb.pcb_net(
-            net,
-            end_points,
-            self.num_classes,
-            feature_dim=2048,
-            only_pcb=FLAGS.only_pcb
-            )
+        net = end_points['global_pool']
+        net = slim.conv2d(net, 512, [1, 1], stride=1, 
+                            activation_fn=None, normalizer_fn=None)
+        net = slim.batch_norm(net, activation_fn=tf.nn.relu)
+        net = 
+        net = slim.dropout(net, 0.5)
 
-        # pdb.set_trace()
+        net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
+                            activation_fn=None, normalizer_fn=None)
 
-        # self.logits = end_points['resnet_v2_50/branch_0/resnet_v2_50/spatial_squeeze']
-        self.logits = end_points["Logits"]
+        self.logits = net
+        self.pred = tf.nn.softmax(net)
         # self.pred = end_points['predictions']
-        self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
-            end_points['predictions_2'],end_points['predictions_3'],
-            end_points['predictions_4'],end_points['predictions_5']], axis=0)
+        # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
+        #     end_points['predictions_2'],end_points['predictions_3'],
+        #     end_points['predictions_4'],end_points['predictions_5']], axis=0)
         self.end_points = end_points
 
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.pred,1))

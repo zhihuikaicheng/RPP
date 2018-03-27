@@ -216,7 +216,7 @@ def resnet_v2(inputs,
         if num_classes is not None:
           net = slim.conv2d(net, num_classes, [1, 1], activation_fn=None,
                             normalizer_fn=None, scope='logits')
-          pdb.set_trace()
+          # pdb.set_trace()
           end_points[sc.name + '/logits'] = net
           if spatial_squeeze:
             net = tf.squeeze(net, [1, 2], name='SpatialSqueeze')
