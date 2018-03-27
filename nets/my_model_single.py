@@ -53,7 +53,7 @@ class MyResNet(BaseModel):
 
         self.logits = self.sub_models[0].logits
         self.end_points = self.sub_models[0].end_points
-        self.feature = self.sub_models[0].end_points["global_pool"]
+        # self.feature = self.sub_models[0].end_points["global_pool"]
 
     def init_loss(self):
         cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
@@ -111,7 +111,8 @@ class SubResNet(BaseModel):
             net = end_points['global_pool']
             net = slim.conv2d(net, 512, [1, 1], stride=1, 
                                 activation_fn=None, normalizer_fn=None)
-            net = slim.batch_norm(net, activation_fn=tf.nn.relu)
+            net = slim.batch_norm(net, activation_fn=None)
+            self.feature = net
             net = slim.dropout(net, 0.5)
 
             net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
