@@ -135,9 +135,9 @@ class SubResNet(BaseModel):
         tf.summary.scalar('acc/%s' % self.acc, self.acc)
 
     def init_loss(self):
-        cross_entropy = 0.0
-        for i in range(len(self.logits)):
-            cross_entropy += -tf.reduce_sum(self.label*tf.log(self.end_points["predictions_%s" % i]+FLAGS.opt_epsilon), axis=1)
+        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.pred + FLAGS.opt_epsilon), axis=1)
+        # for i in range(len(self.logits)):
+        #     cross_entropy += -tf.reduce_sum(self.label*tf.log(self.end_points["predictions_%s" % i]+FLAGS.opt_epsilon), axis=1)
         self.loss = tf.reduce_mean(cross_entropy)
 
         tf.summary.scalar('losses/%s' % self.scope, self.loss)
