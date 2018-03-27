@@ -116,7 +116,8 @@ class SubResNet(BaseModel):
 
             net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
                             activation_fn=None, normalizer_fn=None)
-
+            net = tf.squeeze(net, [1, 2])
+            
         self.logits = net
         self.pred = slim.softmax(net)
         # self.pred = end_points['predictions']
