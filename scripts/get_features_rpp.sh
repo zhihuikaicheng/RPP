@@ -2,7 +2,7 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/world/data-gpu-94/sysu-reid/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_baseline
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_only
 # Where the dataset is saved to.
 DATASET_DIR=/home/yuanziyi/Market-1501
 # WHere the log is saved to
@@ -20,7 +20,7 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=25476 \
+--ckpt_num=16249 \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=4 \
@@ -34,7 +34,7 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=27449 \
+--ckpt_num=22323 \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=4 \
@@ -48,7 +48,7 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=29435 \
+--ckpt_num=23338 \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=4 \
