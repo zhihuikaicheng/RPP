@@ -20,7 +20,35 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=19727 \
+--ckpt_num=25476 \
+--scale_height=384 \
+--scale_width=128 \
+--GPU_use=4 \
+
+python get_features_single.py \
+--dataset_name=Market_1501 \
+--probe_dataset_dir=${PROBE_OUTPUT_DIR} \
+--gallery_dataset_dir=${GALLERY_OUTPUT_DIR} \
+--batch_size=32 \
+--checkpoint_dir=${TRAIN_DIR} \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
+--log_dir=${LOG_DIR} \
+--weight_decay=0.00004 \
+--ckpt_num=27449 \
+--scale_height=384 \
+--scale_width=128 \
+--GPU_use=4 \
+
+python get_features_single.py \
+--dataset_name=Market_1501 \
+--probe_dataset_dir=${PROBE_OUTPUT_DIR} \
+--gallery_dataset_dir=${GALLERY_OUTPUT_DIR} \
+--batch_size=32 \
+--checkpoint_dir=${TRAIN_DIR} \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
+--log_dir=${LOG_DIR} \
+--weight_decay=0.00004 \
+--ckpt_num=29435 \
 --scale_height=384 \
 --scale_width=128 \
 --GPU_use=4 \
