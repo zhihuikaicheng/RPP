@@ -118,6 +118,7 @@ class SubResNet(BaseModel):
         #                     activation_fn=None, normalizer_fn=None)
         #     net = tf.squeeze(net, [1, 2])
 
+        self.feature = end_points['global_pool']
         self.logits = net
         # self.pred = slim.softmax(net)
         self.pred = end_points['predictions']
