@@ -53,7 +53,7 @@ class MyResNet(BaseModel):
 
         self.logits = self.sub_models[0].logits
         self.end_points = self.sub_models[0].end_points
-        # self.feature = self.sub_models[0].end_points["h"]
+        self.feature = self.sub_models[0].feature
 
     def init_loss(self):
         cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
@@ -107,6 +107,7 @@ class SubResNet(BaseModel):
             scope='resnet_v2_50'
         )
 
+<<<<<<< HEAD
         # with tf.variable_scope('finetune'):
         #     net = end_points['global_pool']
         #     net = slim.conv2d(net, 512, [1, 1], stride=1, 
@@ -118,6 +119,20 @@ class SubResNet(BaseModel):
         #                     activation_fn=None, normalizer_fn=None)
         #     net = tf.squeeze(net, [1, 2])
 
+=======
+        with tf.variable_scope('finetune'):
+            net = end_points['global_pool']
+            net = slim.conv2d(net, 512, [1, 1], stride=1, 
+                                activation_fn=None, normalizer_fn=None)
+            net = slim.batch_norm(net, activation_fn=None)
+            self.feature = net
+            net = slim.dropout(net, 0.5)
+
+            net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
+                            activation_fn=None, normalizer_fn=None)
+            net = tf.squeeze(net, [1, 2])
+            
+>>>>>>> 69c124f9fea5943622dfee140857350f2d632c1a
         self.logits = net
         # self.pred = slim.softmax(net)
         self.pred = end_points['predictions']
