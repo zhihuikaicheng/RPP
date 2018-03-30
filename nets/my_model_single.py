@@ -96,7 +96,7 @@ class SubResNet(BaseModel):
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
-        _, end_points = resnet_v2.resnet_v2_50(
+        net, end_points = resnet_v2.resnet_v2_50(
             x,
             is_training=self.is_training,
             global_pool=self.global_pool,
@@ -107,20 +107,20 @@ class SubResNet(BaseModel):
             scope='resnet_v2_50'
         )
 
-        with tf.variable_scope('finetune'):
-            net = end_points['global_pool']
-            net = slim.conv2d(net, 512, [1, 1], stride=1, 
-                                activation_fn=None, normalizer_fn=None)
-            net = slim.batch_norm(net, activation_fn=tf.nn.relu)
-            net = slim.dropout(net, 0.5)
+        # with tf.variable_scope('finetune'):
+        #     net = end_points['global_pool']
+        #     net = slim.conv2d(net, 512, [1, 1], stride=1, 
+        #                         activation_fn=None, normalizer_fn=None)
+        #     net = slim.batch_norm(net, activation_fn=tf.nn.relu)
+        #     net = slim.dropout(net, 0.5)
 
-            net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
-                            activation_fn=None, normalizer_fn=None)
-            net = tf.squeeze(net, [1, 2])
-            
+        #     net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
+        #                     activation_fn=None, normalizer_fn=None)
+        #     net = tf.squeeze(net, [1, 2])
+
         self.logits = net
-        self.pred = slim.softmax(net)
-        # self.pred = end_points['predictions']
+        # self.pred = slim.softmax(net)
+        self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
         #     end_points['predictions_2'],end_points['predictions_3'],
         #     end_points['predictions_4'],end_points['predictions_5']], axis=0)
