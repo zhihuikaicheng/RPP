@@ -274,7 +274,7 @@ def _configure_optimizer(learning_rate):
   return optimizer
 
 class que(object):
-    def __init__(self, max_size=1000):
+    def __init__(self, max_size=400):
         self.arr = []
         self.max_size = max_size
    
@@ -347,7 +347,7 @@ class Trainer(object):
             FLAGS.num_classes-FLAGS.labels_offset,
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=True,
-            scope='resnet_v2_50',
+            scope='resnet_v1_50',
             global_pool=True,
             output_stride=16,
             spatial_squeeze=True,
