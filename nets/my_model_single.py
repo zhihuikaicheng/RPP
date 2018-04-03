@@ -5,7 +5,7 @@ from __future__ import print_function
 import tensorflow as tf
 import pdb
 
-from nets import resnet_v2
+from nets import resnet_v1
 from nets import pcb
 
 FLAGS = tf.app.flags.FLAGS
@@ -35,7 +35,7 @@ class MyResNet(BaseModel):
 
         with tf.variable_scope(scope):
             self.init_input()
-            with slim.arg_scope(resnet_v2.resnet_arg_scope()):
+            with slim.arg_scope(resnet_v1.resnet_arg_scope()):
                 self.init_network()
             self.init_loss()
 
@@ -96,7 +96,7 @@ class SubResNet(BaseModel):
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
-        net, end_points = resnet_v2.resnet_v2_50(
+        net, end_points = resnet_v1.resnet_v1_50(
             x,
             is_training=self.is_training,
             global_pool=self.global_pool,
@@ -104,24 +104,26 @@ class SubResNet(BaseModel):
             spatial_squeeze=self.spatial_squeeze,
             num_classes=self.num_classes,
             reuse=self.reuse,
-            scope='resnet_v2_50'
+            scope='resnet_v1_50'
         )
 
-        # with tf.variable_scope('finetune'):
-        #     net = end_points['global_pool']
-        #     net = slim.conv2d(net, 512, [1, 1], stride=1, 
-        #                         activation_fn=None, normalizer_fn=None)
-        #     net = slim.batch_norm(net, activation_fn=tf.nn.relu)
-        #     net = slim.dropout(net, 0.5)
+        with tf.variable_scope('finetune'):
+            net = end_points['global_pool']
+            net = slim.conv2d(net, 512, [1, 1], stride=1, 
+                                activation_fn=None, normalizer_fn=None)
+            net = slim.batch_norm(net, activation_fn=None)
+            self.feature = net
+            net = tf.nn.relu(net)
+            net = slim.dropout(net, 0.8)
 
-        #     net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
-        #                     activation_fn=None, normalizer_fn=None)
-        #     net = tf.squeeze(net, [1, 2])
+            net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
+                            activation_fn=None, normalizer_fn=None)
+            net = tf.squeeze(net, [1, 2])
 
-        self.feature = end_points['global_pool']
+        # self.feature = end_points['global_pool']
         self.logits = net
-        # self.pred = slim.softmax(net)
-        self.pred = end_points['predictions']
+        self.pred = slim.softmax(net)
+        # self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
         #     end_points['predictions_2'],end_points['predictions_3'],
         #     end_points['predictions_4'],end_points['predictions_5']], axis=0)
@@ -164,7 +166,7 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('resnet_v2_50/logits') or name.startswith('pcb') or name.startswith('part_classifier') or name.startswith('finetune'):
+            if name.startswith('resnet_v1_50/logits') or name.startswith('pcb') or name.startswith('part_classifier') or name.startswith('finetune'):
                 continue
             d[name] = var
 
