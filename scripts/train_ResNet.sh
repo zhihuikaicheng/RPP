@@ -17,7 +17,7 @@ python train.py \
 --batch_size=32 \
 --max_number_of_steps=8000 \
 --checkpoint_dir=${TRAIN_DIR} \
---pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=300 \
 --log_every_n_steps=100 \
@@ -37,7 +37,7 @@ python train.py \
 --batch_size=32 \
 --max_number_of_steps=16000 \
 --checkpoint_dir=${TRAIN_DIR} \
---pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=300 \
 --log_every_n_steps=100 \
@@ -55,7 +55,7 @@ python train.py \
 --batch_size=32 \
 --max_number_of_steps=24000 \
 --checkpoint_dir=${TRAIN_DIR} \
---pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=300 \
 --log_every_n_steps=100 \
