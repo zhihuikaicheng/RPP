@@ -207,7 +207,7 @@ def _configure_learning_rate1(num_samples_per_epoch, global_step):
                                       staircase=True,
                                       name='exponential_decay_learning_rate')
   elif FLAGS.learning_rate_decay_type == 'fixed':
-    return tf.constant(FLAGS.learning_rate1, name='fixed_learning_rate')
+    return tf.constant(FLAGS.learning_rate1, name='fixed_learning_rate1')
   elif FLAGS.learning_rate_decay_type == 'polynomial':
     return tf.train.polynomial_decay(FLAGS.learning_rate1,
                                      global_step,
@@ -246,7 +246,7 @@ def _configure_learning_rate2(num_samples_per_epoch, global_step):
                                       staircase=True,
                                       name='exponential_decay_learning_rate')
   elif FLAGS.learning_rate_decay_type == 'fixed':
-    return tf.constant(FLAGS.learning_rate2, name='fixed_learning_rate')
+    return tf.constant(FLAGS.learning_rate2, name='fixed_learning_rate2')
   elif FLAGS.learning_rate_decay_type == 'polynomial':
     return tf.train.polynomial_decay(FLAGS.learning_rate2,
                                      global_step,
