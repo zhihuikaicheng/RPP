@@ -358,17 +358,24 @@ class Trainer(object):
 
     def init_opt(self):
         with tf.device(self.deploy_config.optimizer_device()):
-            learning_rate = _configure_learning_rate(5000, self.global_step) #5000 is a discarded para
-            optimizer = _configure_optimizer(learning_rate)
+            # learning_rate = _configure_learning_rate(5000, self.global_step) #5000 is a discarded para
+            optimizer1 = _configure_optimizer(FLAGS.learning_rate1)
+            optimizer2 = _configure_optimizer(FLAGS.learning_rate2)
             tf.summary.scalar('learning_rate', learning_rate)
 
-        self.learning_rate = learning_rate
-        self.optimizer = optimizer
+        self.learning_rate1 = FLAGS.learning_rate1
+        self.learning_rate2 = FLAGS.learning_rate2
+        self.optimizer1 = optimizer1
+        self.optimizer2 = optimizer2
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-        grad = tf.gradients(self.network.loss, variables)
+        variables_stage1 = [var for var in variables if not var.name.startswith('resnet_v2_50/branch_0/fine_tune')]
+        variables_stage2 = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/fine_tune')]
+        grad1 = tf.gradients(self.network.loss, variables_stage1)
+        grad2 = tf.gradients(self.network.loss, variables_stage2)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-        self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
+        self.train_op = [self.optimizer1.apply_gradients(zip(grad1,variables_stage1))] + 
+            [self.optimizer2.apply_gradients(zip(grad2,variables_stage2))] + bn_op
 
         # variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/part_classifier')]
         # bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]
