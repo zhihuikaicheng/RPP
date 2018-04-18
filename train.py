@@ -200,16 +200,16 @@ def _configure_learning_rate1(num_samples_per_epoch, global_step):
     decay_steps /= FLAGS.replicas_to_aggregate
 
   if FLAGS.learning_rate_decay_type == 'exponential':
-    return tf.train.exponential_decay(FLAGS.learning_rate1,
+    return tf.train.exponential_decay(FLAGS.learning_rate_one,
                                       global_step,
                                       decay_steps,
                                       FLAGS.learning_rate_decay_factor,
                                       staircase=True,
                                       name='exponential_decay_learning_rate')
   elif FLAGS.learning_rate_decay_type == 'fixed':
-    return tf.constant(FLAGS.learning_rate1, name='fixed_learning_rate1')
+    return tf.constant(FLAGS.learning_rate_one, name='fixed_learning_rate1')
   elif FLAGS.learning_rate_decay_type == 'polynomial':
-    return tf.train.polynomial_decay(FLAGS.learning_rate1,
+    return tf.train.polynomial_decay(FLAGS.learning_rate_one,
                                      global_step,
                                      decay_steps,
                                      FLAGS.end_learning_rate,
@@ -239,16 +239,16 @@ def _configure_learning_rate2(num_samples_per_epoch, global_step):
     decay_steps /= FLAGS.replicas_to_aggregate
 
   if FLAGS.learning_rate_decay_type == 'exponential':
-    return tf.train.exponential_decay(FLAGS.learning_rate2,
+    return tf.train.exponential_decay(FLAGS.learning_rate_two,
                                       global_step,
                                       decay_steps,
                                       FLAGS.learning_rate_decay_factor,
                                       staircase=True,
                                       name='exponential_decay_learning_rate')
   elif FLAGS.learning_rate_decay_type == 'fixed':
-    return tf.constant(FLAGS.learning_rate2, name='fixed_learning_rate2')
+    return tf.constant(FLAGS.learning_rate_two, name='fixed_learning_rate2')
   elif FLAGS.learning_rate_decay_type == 'polynomial':
-    return tf.train.polynomial_decay(FLAGS.learning_rate2,
+    return tf.train.polynomial_decay(FLAGS.learning_rate_two,
                                      global_step,
                                      decay_steps,
                                      FLAGS.end_learning_rate,
