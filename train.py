@@ -397,14 +397,14 @@ class Trainer(object):
 
     def init_opt(self):
         with tf.device(self.deploy_config.optimizer_device()):
-            learning_rate1 = _configure_learning_rate1(5000, self.global_step) #5000 is a discarded para
-            learning_rate2 = _configure_learning_rate2(5000, self.global_step)
-            optimizer1 = _configure_optimizer(learning_rate1)
-            optimizer2 = _configure_optimizer(learning_rate2)
-            tf.summary.scalar('learning_rate', learning_rate)
+            lr1 = _configure_learning_rate1(5000, self.global_step) #5000 is a discarded para
+            lr2 = _configure_learning_rate2(5000, self.global_step)
+            optimizer1 = _configure_optimizer(lr1)
+            optimizer2 = _configure_optimizer(lr2)
+            # tf.summary.scalar('learning_rate', learning_rate)
 
-        self.learning_rate1 = FLAGS.learning_rate1
-        self.learning_rate2 = FLAGS.learning_rate2
+        # self.learning_rate1 = FLAGS.learning_rate1
+        # self.learning_rate2 = FLAGS.learning_rate2
         self.optimizer1 = optimizer1
         self.optimizer2 = optimizer2
 
