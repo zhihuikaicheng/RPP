@@ -2,7 +2,7 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/world/data-gpu-94/sysu-reid/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_v1_baseline
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_v2_baseline
 # Where the dataset is saved to.
 DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 # WHere the log is saved to
@@ -18,7 +18,7 @@ python train.py \
 --batch_size=32 \
 --max_number_of_steps=24000 \
 --checkpoint_dir=${TRAIN_DIR} \
---pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=300 \
 --log_every_n_steps=100 \
@@ -38,7 +38,7 @@ python train.py \
 # --batch_size=32 \
 # --max_number_of_steps=16000 \
 # --checkpoint_dir=${TRAIN_DIR} \
-# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
+# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 # --log_dir=${LOG_DIR} \
 # --save_model_summary_secs=300 \
 # --log_every_n_steps=100 \
@@ -56,7 +56,7 @@ python train.py \
 # --batch_size=32 \
 # --max_number_of_steps=24000 \
 # --checkpoint_dir=${TRAIN_DIR} \
-# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
+# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v2_50.ckpt \
 # --log_dir=${LOG_DIR} \
 # --save_model_summary_secs=300 \
 # --log_every_n_steps=100 \
