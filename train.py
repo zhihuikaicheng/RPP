@@ -397,10 +397,10 @@ class Trainer(object):
 
     def init_opt(self):
         with tf.device(self.deploy_config.optimizer_device()):
-            lr1 = tf.constant(FLAGS.learning_rate_one)
-            lr2 = tf.constant(FLAGS.learning_rate_two)
-            optimizer1 = _configure_optimizer(lr1)
-            optimizer2 = _configure_optimizer(lr2)
+            # lr1 = tf.constant(FLAGS.learning_rate_one)
+            # lr2 = tf.constant(FLAGS.learning_rate_two)
+            optimizer1 = _configure_optimizer(0.01)
+            optimizer2 = _configure_optimizer(0.1)
             # tf.summary.scalar('learning_rate', learning_rate)
 
         # self.learning_rate1 = FLAGS.learning_rate1
