@@ -373,12 +373,33 @@ class Get_feature(object):
             filenames = os.listdir(FLAGS.checkpoint_dir)
             filenames = [name for name in filenames if name.endswith('index')]
             if len(filenames) > 0:
-                # pattern = r'model\.ckpt\-(\d+)\.index'
-                # nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
-                max_num = FLAGS.ckpt_num
+                pattern = r'model\.ckpt\-(\d+)\.index'
+                nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
+                max_num = max(nums)
+                if max_num <= FLAGS.max_step_to_train_pcb:
+                    tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+                    tmp_d = {}
+                    for var in tmp_vars:
+                        name = var.name.replace(':0', '')
+                        if name.startswith('resnet_v2_50/branch_0/part_classifier'):
+                            continue
+                        tmp_d[name] = var
+                    tmp_saver = tf.train.Saver(tmp_d)
+                    self.saver = tmp_saver
 
+                elif max_num <= FLAGS.max_step_to_train_pcb + FLAGS.max_step_to_train_classifier:
+                    tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+                    tmp_d = {}
+                    for var in tmp_vars:
+                        name = var.name.replace(':0', '')
+                        if name.endswith('Adam') or name.endswith('Adam_1'):
+                            continue
+                        tmp_d[name] = var
+                    tmp_saver = tf.train.Saver(tmp_d)
+                    self.saver = tmp_saver
+                
                 self.saver.restore(self.sess, os.path.join(FLAGS.checkpoint_dir, 'model.ckpt-{}'.format(max_num)))
-                print("[JH]use checkpoint-{} weights".format(max_num))
+                print("[zkc]use checkpoint-{} weights".format(max_num))
                 return max_num
         if os.path.exists(FLAGS.pretrain_path):
             self.network.load_pretrain_model(self.sess, FLAGS.pretrain_path)
