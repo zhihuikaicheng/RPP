@@ -411,6 +411,7 @@ class Trainer(object):
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
         variables_stage1 = [var for var in variables if not var.name.startswith('resnet_v2_50/branch_0/finetune')]
         variables_stage2 = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/finetune')]
+        pdb.set_trace()
         grad1 = tf.gradients(self.network.loss, variables_stage1)
         grad2 = tf.gradients(self.network.loss, variables_stage2)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
