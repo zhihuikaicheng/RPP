@@ -132,6 +132,10 @@ tf.app.flags.DEFINE_bool('only_pcb', True, 'only train pcb')
 
 tf.app.flags.DEFINE_bool('only_classifier', False, 'only train classifier')
 
+tf.app.flags.DEFINE_integer('max_step_to_train_pcb', 100000, 'The max step you wish pcb to train')
+
+tf.app.flags.DEFINE_integer('max_step_to_train_classifier', 40000, 'The max step you wish refined part classifier to train')
+
 tf.app.flags.DEFINE_integer(
     'ckpt_num', None, 'The number of ckpt model.')
 
