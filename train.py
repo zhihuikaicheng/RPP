@@ -94,6 +94,10 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
 
+tf.app.flags.DEFINE_float('learning_rate_one', 0.01, 'Initial learning rate.')
+
+tf.app.flags.DEFINE_float('learning_rate_two', 0.01, 'Initial learning rate.')
+
 tf.app.flags.DEFINE_float(
     'end_learning_rate', 0.0001,
     'The minimal end learning rate used by a polynomial decay learning rate.')
@@ -397,21 +401,19 @@ class Trainer(object):
 
     def init_opt(self):
         with tf.device(self.deploy_config.optimizer_device()):
-            # lr1 = tf.constant(FLAGS.learning_rate_one)
-            # lr2 = tf.constant(FLAGS.learning_rate_two)
-            optimizer1 = _configure_optimizer(0.01)
-            optimizer2 = _configure_optimizer(0.1)
+            lr1 = _configure_learning_rate1(12000, self.global_step)
+            lr2 = _configure_learning_rate2(12000, self.global_step)
+            optimizer1 = _configure_optimizer(lr1)
+            optimizer2 = _configure_optimizer(lr2)
             # tf.summary.scalar('learning_rate', learning_rate)
 
-        # self.learning_rate1 = FLAGS.learning_rate1
-        # self.learning_rate2 = FLAGS.learning_rate2
         self.optimizer1 = optimizer1
         self.optimizer2 = optimizer2
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
         variables_stage1 = [var for var in variables if not var.name.startswith('resnet_v2_50/branch_0/finetune')]
         variables_stage2 = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/finetune')]
-        pdb.set_trace()
+        # pdb.set_trace()
         grad1 = tf.gradients(self.network.loss, variables_stage1)
         grad2 = tf.gradients(self.network.loss, variables_stage2)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
