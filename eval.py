@@ -117,7 +117,7 @@ def cmc(distmat, query_ids=None, gallery_ids=None,
 
 def mean_ap(distmat, query_ids=None, gallery_ids=None,
             query_cams=None, gallery_cams=None):
-    distmat = to_numpy(distmat)
+    # distmat = to_numpy(distmat)
     m, n = distmat.shape
     # Fill up default values
     if query_ids is None:
