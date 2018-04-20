@@ -109,10 +109,10 @@ class SubResNet(BaseModel):
 
         with tf.variable_scope('finetune'):
             net = end_points['global_pool']
+            self.feature = net
             net = slim.conv2d(net, 512, [1, 1], stride=1, 
                                 activation_fn=None, normalizer_fn=None)
             net = slim.batch_norm(net, activation_fn=None)
-            self.feature = net
             net = tf.nn.relu(net)
             net = slim.dropout(net, 0.8)
 

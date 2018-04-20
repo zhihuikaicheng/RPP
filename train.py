@@ -185,6 +185,45 @@ FLAGS = tf.app.flags.FLAGS
 # jh-future:it needs to be add to tf.app.flags
 os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.GPU_use
 
+def _configure_learning_rate(num_samples_per_epoch, global_step):
+  """Configures the learning rate.
+
+  Args:
+    num_samples_per_epoch: The number of samples in each epoch of training.
+    global_step: The global_step tensor.
+
+  Returns:
+    A `Tensor` representing the learning rate.
+
+  Raises:
+    ValueError: if
+  """
+  decay_steps = int(num_samples_per_epoch / FLAGS.batch_size *
+                    FLAGS.num_epochs_per_decay)
+  if FLAGS.sync_replicas:
+    decay_steps /= FLAGS.replicas_to_aggregate
+
+  if FLAGS.learning_rate_decay_type == 'exponential':
+    return tf.train.exponential_decay(FLAGS.learning_rate,
+                                      global_step,
+                                      decay_steps,
+                                      FLAGS.learning_rate_decay_factor,
+                                      staircase=True,
+                                      name='exponential_decay_learning_rate')
+  elif FLAGS.learning_rate_decay_type == 'fixed':
+    return tf.constant(FLAGS.learning_rate, name='fixed_learning_rate1')
+  elif FLAGS.learning_rate_decay_type == 'polynomial':
+    return tf.train.polynomial_decay(FLAGS.learning_rate,
+                                     global_step,
+                                     decay_steps,
+                                     FLAGS.end_learning_rate,
+                                     power=1.0,
+                                     cycle=False,
+                                     name='polynomial_decay_learning_rate')
+  else:
+    raise ValueError('learning_rate_decay_type [%s] was not recognized',
+                     FLAGS.learning_rate_decay_type)
+
 def _configure_learning_rate1(num_samples_per_epoch, global_step):
   """Configures the learning rate.
 
@@ -401,11 +440,13 @@ class Trainer(object):
 
     def init_opt(self):
         with tf.device(self.deploy_config.optimizer_device()):
-            lr1 = _configure_learning_rate1(12000, self.global_step)
-            lr2 = _configure_learning_rate2(12000, self.global_step)
-            optimizer1 = _configure_optimizer(lr1)
-            optimizer2 = _configure_optimizer(lr2)
+            # lr1 = _configure_learning_rate1(12000, self.global_step)
+            # lr2 = _configure_learning_rate2(12000, self.global_step)
+            # optimizer1 = _configure_optimizer(lr1)
+            # optimizer2 = _configure_optimizer(lr2)
             # tf.summary.scalar('learning_rate', learning_rate)
+            lr = _configure_learning_rate(12000, self.global_step)
+            optimizer = _configure_optimizer(lr1)
 
         self.optimizer1 = optimizer1
         self.optimizer2 = optimizer2
