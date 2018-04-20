@@ -122,6 +122,7 @@ class SubResNet(BaseModel):
             net = leakyRelu(net, 0.1)
             net = slim.dropout(net, 0.5)
             net = slim.fully_connected(net, self.num_classes)
+            net = tf.squeeze(net, [1])
 
             # net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
             #                 activation_fn=None, normalizer_fn=None)
