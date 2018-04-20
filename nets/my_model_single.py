@@ -124,22 +124,20 @@ class SubResNet(BaseModel):
             net = slim.fully_connected(net, self.num_classes)
 
             net = tf.squeeze(net, [1])
-            self.logits = net
-            self.pred = slim.softmax(net)
 
             # net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
             #                 activation_fn=None, normalizer_fn=None)
             # net = tf.squeeze(net, [1, 2])
 
         # self.feature = end_points['global_pool']
-        # self.logits = net
-        # self.pred = slim.softmax(net)
+        self.logits = net
+        self.pred = slim.softmax(net)
         # self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
         #     end_points['predictions_2'],end_points['predictions_3'],
         #     end_points['predictions_4'],end_points['predictions_5']], axis=0)
         self.end_points = end_points
-
+        pdb.set_trace()
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.pred,1))
         self.acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
 
