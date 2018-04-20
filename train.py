@@ -211,7 +211,7 @@ def _configure_learning_rate(num_samples_per_epoch, global_step):
                                       staircase=True,
                                       name='exponential_decay_learning_rate')
   elif FLAGS.learning_rate_decay_type == 'fixed':
-    return tf.constant(FLAGS.learning_rate, name='fixed_learning_rate1')
+    return tf.constant(FLAGS.learning_rate, name='fixed_learning_rate')
   elif FLAGS.learning_rate_decay_type == 'polynomial':
     return tf.train.polynomial_decay(FLAGS.learning_rate,
                                      global_step,
@@ -457,7 +457,8 @@ class Trainer(object):
         variables_stage2 = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/finetune')]
         # pdb.set_trace()
         grad1 = tf.gradients(self.network.loss, variables_stage1)
-        grad2 = tf.gradients(self.network.loss * 10, variables_stage2)
+        grad2 = tf.gradients(self.network.loss, variables_stage2)
+        grad2 = grad2 * 10
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         self.train_op = [self.optimizer.apply_gradients(zip(grad1,variables_stage1))] + [self.optimizer.apply_gradients(zip(grad2,variables_stage2))] + bn_op
 
