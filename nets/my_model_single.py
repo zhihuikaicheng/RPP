@@ -122,15 +122,18 @@ class SubResNet(BaseModel):
             net = leakyRelu(net, 0.1)
             net = slim.dropout(net, 0.5)
             net = slim.fully_connected(net, self.num_classes)
+
             net = tf.squeeze(net, [1])
+            self.logits = net
+            self.pred = slim.softmax(net)
 
             # net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
             #                 activation_fn=None, normalizer_fn=None)
             # net = tf.squeeze(net, [1, 2])
 
         # self.feature = end_points['global_pool']
-        self.logits = net
-        self.pred = slim.softmax(net)
+        # self.logits = net
+        # self.pred = slim.softmax(net)
         # self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
         #     end_points['predictions_2'],end_points['predictions_3'],
