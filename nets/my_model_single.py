@@ -123,7 +123,7 @@ class SubResNet(BaseModel):
             net = slim.dropout(net, 0.5)
             net = slim.fully_connected(net, self.num_classes)
 
-            net = tf.squeeze(net, [1])
+            net = tf.squeeze(net, [1, 2])
 
             # net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
             #                 activation_fn=None, normalizer_fn=None)
@@ -137,7 +137,7 @@ class SubResNet(BaseModel):
         #     end_points['predictions_2'],end_points['predictions_3'],
         #     end_points['predictions_4'],end_points['predictions_5']], axis=0)
         self.end_points = end_points
-        pdb.set_trace()
+        # pdb.set_trace()
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.pred,1))
         self.acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
 
