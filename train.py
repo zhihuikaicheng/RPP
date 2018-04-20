@@ -446,19 +446,20 @@ class Trainer(object):
             # optimizer2 = _configure_optimizer(lr2)
             # tf.summary.scalar('learning_rate', learning_rate)
             lr = _configure_learning_rate(12000, self.global_step)
-            optimizer = _configure_optimizer(lr1)
+            optimizer = _configure_optimizer(lr)
 
-        self.optimizer1 = optimizer1
-        self.optimizer2 = optimizer2
+        # self.optimizer1 = optimizer1
+        # self.optimizer2 = optimizer2
+        self.optimizer = optimizer
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
         variables_stage1 = [var for var in variables if not var.name.startswith('resnet_v2_50/branch_0/finetune')]
         variables_stage2 = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/finetune')]
         # pdb.set_trace()
         grad1 = tf.gradients(self.network.loss, variables_stage1)
-        grad2 = tf.gradients(self.network.loss, variables_stage2)
+        grad2 = tf.gradients(self.network.loss * 10, variables_stage2)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-        self.train_op = [self.optimizer1.apply_gradients(zip(grad1,variables_stage1))] + [self.optimizer2.apply_gradients(zip(grad2,variables_stage2))] + bn_op
+        self.train_op = [self.optimizer.apply_gradients(zip(grad1,variables_stage1))] + [self.optimizer.apply_gradients(zip(grad2,variables_stage2))] + bn_op
 
         # variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/part_classifier')]
         # bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]

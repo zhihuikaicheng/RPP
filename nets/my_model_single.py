@@ -11,6 +11,11 @@ from nets import pcb
 FLAGS = tf.app.flags.FLAGS
 slim = tf.contrib.slim
 
+def leakyRelu(x, leak=0.1):
+    f1 = 0.5 * (1 + leak)
+    f2 = 0.5 * (1 - leak)
+    return f1 * x + f2 * tf.abs(x)
+
 class BaseModel(object):
     def __init__(self):
         '''
@@ -110,15 +115,17 @@ class SubResNet(BaseModel):
         with tf.variable_scope('finetune'):
             net = end_points['global_pool']
             self.feature = net
-            net = slim.conv2d(net, 512, [1, 1], stride=1, 
-                                activation_fn=None, normalizer_fn=None)
+            # net = slim.conv2d(net, 512, [1, 1], stride=1, 
+            #                     activation_fn=None, normalizer_fn=None)
+            net = slim.fully_connected(net, 512)
             net = slim.batch_norm(net, activation_fn=None)
-            net = tf.nn.relu(net)
-            net = slim.dropout(net, 0.8)
+            net = leakyRelu(net, 0.1)
+            net = slim.dropout(net, 0.5)
+            net = slim.fully_connected(net, self.num_classes)
 
-            net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
-                            activation_fn=None, normalizer_fn=None)
-            net = tf.squeeze(net, [1, 2])
+            # net = slim.conv2d(net, self.num_classes, [1, 1], stride=1, 
+            #                 activation_fn=None, normalizer_fn=None)
+            # net = tf.squeeze(net, [1, 2])
 
         # self.feature = end_points['global_pool']
         self.logits = net
