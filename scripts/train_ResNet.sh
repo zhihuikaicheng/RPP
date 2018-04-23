@@ -29,6 +29,7 @@ python train.py \
 --scale_width=128 \
 --GPU_use=3 \
 
+python train.py \
 --learning_rate=5e-5 \
 # --learning_rate_one=0.01 \
 # --learning_rate_two=0.1 \
@@ -48,6 +49,7 @@ python train.py \
 --scale_width=128 \
 --GPU_use=3 \
 
+python train.py \
 --learning_rate=1e-5 \
 # --learning_rate_one=0.01 \
 # --learning_rate_two=0.1 \
