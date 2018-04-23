@@ -103,14 +103,14 @@ class SubResNet(BaseModel):
             global_pool=self.global_pool,
             output_stride=self.output_stride,
             spatial_squeeze=self.spatial_squeeze,
-            num_classes=None,
+            num_classes=FLAGS.num_classes,
             reuse=self.reuse,
             scope='resnet_v1_50'
         )
         # pdb.set_trace()
 
-        # self.logits = end_points['resnet_v1_50/branch_0/resnet_v1_50/spatial_squeeze']
-        self.logits = end_points["Logits"]
+        self.logits = end_points['resnet_v1_50/branch_0/resnet_v1_50/spatial_squeeze']
+        # self.logits = end_points["Logits"]
         self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
         #     end_points['predictions_2'],end_points['predictions_3'],
