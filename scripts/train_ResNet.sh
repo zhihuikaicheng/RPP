@@ -11,8 +11,6 @@ LOG_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/log
 OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_train
 python train.py \
 --learning_rate=2e-4 \
-# --learning_rate_one=0.01 \
-# --learning_rate_two=0.1 \
 --learning_rate_decay_type=fixed \
 --weight_decay=5e-4 \
 --dataset_name=Market_1501 \
@@ -31,8 +29,6 @@ python train.py \
 
 python train.py \
 --learning_rate=5e-5 \
-# --learning_rate_one=0.01 \
-# --learning_rate_two=0.1 \
 --learning_rate_decay_type=fixed \
 --weight_decay=5e-4 \
 --dataset_name=Market_1501 \
@@ -51,8 +47,6 @@ python train.py \
 
 python train.py \
 --learning_rate=1e-5 \
-# --learning_rate_one=0.01 \
-# --learning_rate_two=0.1 \
 --learning_rate_decay_type=fixed \
 --weight_decay=5e-4 \
 --dataset_name=Market_1501 \
