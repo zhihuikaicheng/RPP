@@ -247,9 +247,9 @@ class Get_feature(object):
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=False,
             scope='resnet_v1_50',
-            global_pool=False,
+            global_pool=True,
             output_stride=16,
-            spatial_squeeze=False,
+            spatial_squeeze=True,
             reuse=None
         )
         self.network = network

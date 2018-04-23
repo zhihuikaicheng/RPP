@@ -217,7 +217,6 @@ def resnet_v1(inputs,
         # Convert end_points_collection into a dictionary of end_points.
         end_points = slim.utils.convert_collection_to_dict(
             end_points_collection)
-        end_points['feature'] = net
 
         if global_pool:
           # Global average pooling.
