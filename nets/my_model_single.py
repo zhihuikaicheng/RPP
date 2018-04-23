@@ -109,7 +109,7 @@ class SubResNet(BaseModel):
         )
         # pdb.set_trace()
 
-        self.logits = end_points['resnet_v1_50/branch_0/resnet_v1_50/spatial_squeeze']
+        self.logits = net
         # self.logits = end_points["Logits"]
         self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
