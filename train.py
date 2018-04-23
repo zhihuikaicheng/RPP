@@ -358,9 +358,13 @@ class Trainer(object):
         self.optimizer = optimizer
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-        grad = tf.gradients(self.network.loss, variables)
+        variables_base = [var for var in variables if not var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/logits')]
+        variables_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/logits')]
+        pdb.set_trace()
+        grad_base = tf.gradients(self.network.loss, variables_base)
+        grad_classifier = tf.gradients(self.network.loss * 10, variables_classifier)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-        self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
+        self.train_op = [self.optimizer.apply_gradients(zip(grad_base,variables_base))] + [self.optimizer.apply_gradients(zip(grad_classifier,variables_classifier))] + bn_op
 
         # variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/part_classifier')]
         # bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v1_50/branch_0/part_classifier')]
