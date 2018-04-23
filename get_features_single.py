@@ -122,7 +122,7 @@ tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
 tf.app.flags.DEFINE_integer('scale_size', 299, 'size of scale in single model')
 
-tf.app.flags.DEFINE_integer('scale_height', 384, 'size of scale in single model')
+tf.app.flags.DEFINE_integer('scale_height', 256, 'size of scale in single model')
 
 tf.app.flags.DEFINE_integer('scale_width', 128, 'size of scale in single model')
 
@@ -246,9 +246,9 @@ class Get_feature(object):
             FLAGS.num_classes-FLAGS.labels_offset,
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=False,
-            scope='resnet_v2_50',
+            scope='resnet_v1_50',
             global_pool=False,
-            output_stride=4,
+            output_stride=16,
             spatial_squeeze=False,
             reuse=None
         )
