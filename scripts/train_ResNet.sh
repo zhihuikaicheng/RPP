@@ -28,7 +28,7 @@ OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bound
 # --GPU_use=3 \
 
 python train.py \
---learning_rate=0.0001 \
+--learning_rate=0.001 \
 --learning_rate_decay_type=fixed \
 --weight_decay=5e-4 \
 --dataset_name=Market_1501 \
