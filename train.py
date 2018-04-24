@@ -349,15 +349,17 @@ class Trainer(object):
 
 
     def init_opt(self):
-        with tf.device(self.deploy_config.optimizer_device()):
-            learning_rate = _configure_learning_rate(5000, self.global_step) #5000 is a discarded para
-            optimizer = _configure_optimizer(learning_rate)
-            tf.summary.scalar('learning_rate', learning_rate)
+        # with tf.device(self.deploy_config.optimizer_device()):
+        #     learning_rate = _configure_learning_rate(5000, self.global_step) #5000 is a discarded para
+        #     optimizer = _configure_optimizer(learning_rate)
+        #     tf.summary.scalar('learning_rate', learning_rate)
+        optimizer = tf.train.GradientDescentOptimizer(FLAGS.learning_rate)
 
-        self.learning_rate = learning_rate
+        self.learning_rate = FLAGS.learning_rate
         self.optimizer = optimizer
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+
         # variables_base = [var for var in variables if not var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/logits')]
         # variables_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/logits')]
         # pdb.set_trace()
