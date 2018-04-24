@@ -355,7 +355,7 @@ class Trainer(object):
         #     tf.summary.scalar('learning_rate', learning_rate)
         optimizer = tf.train.GradientDescentOptimizer(FLAGS.learning_rate)
 
-        self.learning_rate = learning_rate
+        self.learning_rate = FLAGS.learning_rate
         self.optimizer = optimizer
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
