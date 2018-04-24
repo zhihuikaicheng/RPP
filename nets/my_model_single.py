@@ -97,7 +97,7 @@ class SubResNet(BaseModel):
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
-        net, end_points = resnet_v1.resnet_v1_50(
+        _, end_points = resnet_v1.resnet_v1_50(
             x,
             is_training=self.is_training,
             global_pool=self.global_pool,
@@ -108,10 +108,23 @@ class SubResNet(BaseModel):
             scope='resnet_v1_50'
         )
         # pdb.set_trace()
+        with tf.variable_scope('enbedding'):
+            net = end_points['global_pool']
+            net = slim.flatten(net)
+            net = slim.fully_connected(net, 512)
+            net = slim.batch_norm(net, activations_fn=None)
+            net = tf.nn.relu(net)
+            net = slim.dropout(net, 0.5)
 
-        self.logits = end_points['resnet_v1_50/branch_0/resnet_v1_50/spatial_squeeze']
+        with tf.variable_scope('classifier'):
+            net = slim.fully_connected(net, num_classes, scope='logits')
+
+        self.logits = net
+        self.pred = slim.softmax(net)
+
+        # self.logits = end_points['resnet_v1_50/branch_0/resnet_v1_50/spatial_squeeze']
         # self.logits = end_points["Logits"]
-        self.pred = end_points['predictions']
+        # self.pred = end_points['predictions']
         # self.pred = tf.reduce_mean([end_points['predictions_0'],end_points['predictions_1'],
         #     end_points['predictions_2'],end_points['predictions_3'],
         #     end_points['predictions_4'],end_points['predictions_5']], axis=0)
@@ -128,11 +141,12 @@ class SubResNet(BaseModel):
         tf.summary.scalar('acc/%s' % self.acc, self.acc)
 
     def init_loss(self):
-        cross_entropy = 0.0
+        # cross_entropy = 0.0
         # for i in range(len(self.logits)):
         #     cross_entropy += -tf.reduce_sum(self.label*tf.log(self.end_points["predictions_%s" % i]+FLAGS.opt_epsilon), axis=1)
-        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.end_points["predictions"]+FLAGS.opt_epsilon), axis=1)
-        self.loss = tf.reduce_mean(cross_entropy)
+        # cross_entropy = -tf.reduce_sum(self.label*tf.log(self.end_points["predictions"]+FLAGS.opt_epsilon), axis=1)
+        # self.loss = tf.reduce_mean(cross_entropy)
+        self.loss = slim.losses.softmax_cross_entropy(self.pred, self.label)
 
         tf.summary.scalar('losses/%s' % self.scope, self.loss)
 
