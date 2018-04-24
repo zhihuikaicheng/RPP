@@ -114,7 +114,7 @@ class SubResNet(BaseModel):
             net = slim.fully_connected(net, 512)
             net = slim.batch_norm(net, activation_fn=None)
             net = tf.nn.relu(net)
-            net = slim.dropout(net, 0.5)
+            net = slim.dropout(net, 0.8)
 
         with tf.variable_scope('classifier'):
             net = slim.fully_connected(net, self.num_classes, scope='logits')
@@ -144,7 +144,7 @@ class SubResNet(BaseModel):
         cross_entropy = 0.0
         # for i in range(len(self.logits)):
         #     cross_entropy += -tf.reduce_sum(self.label*tf.log(self.end_points["predictions_%s" % i]+FLAGS.opt_epsilon), axis=1)
-        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.end_points["predictions"]+FLAGS.opt_epsilon), axis=1)
+        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.pred + FLAGS.opt_epsilon), axis=1)
         self.loss = tf.reduce_mean(cross_entropy)
         # self.loss = slim.losses.softmax_cross_entropy(self.pred, self.label)
 
