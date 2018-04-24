@@ -169,7 +169,7 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('resnet_v1_50/logits') or name.startswith('embedding') or name.startswith('classifier'):
+            if name.startswith('resnet_v1_50/logits') or name.startswith('enbedding') or name.startswith('classifier'):
                 continue
             d[name] = var
 
