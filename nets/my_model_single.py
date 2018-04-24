@@ -112,7 +112,7 @@ class SubResNet(BaseModel):
             net = end_points['global_pool']
             net = slim.flatten(net)
             net = slim.fully_connected(net, 512)
-            net = slim.batch_norm(net, activations_fn=None)
+            net = slim.batch_norm(net, activation_fn=None)x
             net = tf.nn.relu(net)
             net = slim.dropout(net, 0.5)
 
@@ -169,7 +169,7 @@ class SubResNet(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('resnet_v1_50/logits') or name.startswith('pcb') or name.startswith('part_classifier'):
+            if name.startswith('resnet_v1_50/logits') or name.startswith('embedding') or name.startswith('classifier'):
                 continue
             d[name] = var
 
