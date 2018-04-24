@@ -266,7 +266,7 @@ def _configure_optimizer(learning_rate):
   return optimizer
 
 class que(object):
-    def __init__(self, max_size=1000):
+    def __init__(self, max_size=400):
         self.arr = []
         self.max_size = max_size
    
