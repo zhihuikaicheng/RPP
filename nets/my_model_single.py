@@ -114,7 +114,7 @@ class SubResNet(BaseModel):
             net = slim.fully_connected(net, 512)
             net = slim.batch_norm(net, activation_fn=None)
             net = tf.nn.relu(net)
-            net = slim.dropout(net, 0.8)
+            net = slim.dropout(net, 0.5)
 
         with tf.variable_scope('classifier'):
             net = slim.fully_connected(net, self.num_classes, scope='logits')
