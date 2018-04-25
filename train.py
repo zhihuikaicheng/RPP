@@ -260,7 +260,7 @@ def _configure_optimizer(learning_rate):
         momentum=FLAGS.rmsprop_momentum,
         epsilon=FLAGS.opt_epsilon)
   elif FLAGS.optimizer == 'sgd':
-    optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
+    optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=0.9, use_nesterov=True)
   else:
     raise ValueError('Optimizer [%s] was not recognized', FLAGS.optimizer)
   return optimizer
@@ -342,7 +342,7 @@ class Trainer(object):
             scope='resnet_v1_50',
             global_pool=True,
             output_stride=16,
-            spatial_squeeze=True,
+            spatial_squeeze=False,
             reuse=None
         )
         self.network = network
@@ -359,15 +359,15 @@ class Trainer(object):
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
 
-        # variables_base = [var for var in variables if not var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/logits')]
-        # variables_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/logits')]
+        variables_base = [var for var in variables if not var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/embedding')]
+        variables_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/embedding')]
         # pdb.set_trace()
-        # grad_base = tf.gradients(self.network.loss, variables_base)
-        # grad_classifier = tf.gradients(self.network.loss * 10, variables_classifier)
+        grad_base = tf.gradients(self.network.loss, variables_base)
+        grad_classifier = tf.gradients(self.network.loss * 10, variables_classifier)
         grad = tf.gradients(self.network.loss, variables)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-        self.train_op = [self.optimizer.apply_gradients(zip(grad, variables))] + bn_op
-        # self.train_op = [self.optimizer.apply_gradients(zip(grad_base,variables_base))] + [self.optimizer.apply_gradients(zip(grad_classifier,variables_classifier))] + bn_op
+        # self.train_op = [self.optimizer.apply_gradients(zip(grad, variables))] + bn_op
+        self.train_op = [self.optimizer.apply_gradients(zip(grad_base,variables_base))] + [self.optimizer.apply_gradients(zip(grad_classifier,variables_classifier))] + bn_op
 
         # variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/part_classifier')]
         # bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v1_50/branch_0/part_classifier')]
