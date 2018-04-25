@@ -111,7 +111,7 @@ class SubResNet(BaseModel):
         with tf.variable_scope('embedding'):
             net = end_points['global_pool']
             net = slim.flatten(net)
-            net = slim.fully_connected(net, 512)
+            net = slim.fully_connected(net, 512, activation_fn=None)
             net = slim.batch_norm(net, activation_fn=None)
             net = tf.nn.relu(net)
             net = slim.dropout(net, 0.5)
