@@ -11,6 +11,11 @@ from nets import pcb
 FLAGS = tf.app.flags.FLAGS
 slim = tf.contrib.slim
 
+def LeakyRelu(x, leak=0.1):
+         f1 = 0.5 * (1 + leak)
+         f2 = 0.5 * (1 - leak)
+         return f1 * x + f2 * tf.abs(x)
+
 class BaseModel(object):
     def __init__(self):
         '''
@@ -113,7 +118,7 @@ class SubResNet(BaseModel):
             net = slim.flatten(net)
             net = slim.fully_connected(net, 512, activation_fn=None)
             net = slim.batch_norm(net, activation_fn=None)
-            net = tf.nn.relu(net)
+            net = LeakyRelu(net, leak=0.1)
             net = slim.dropout(net, 0.5)
             net = slim.fully_connected(net, self.num_classes, activation_fn=None, scope='logits')
 
