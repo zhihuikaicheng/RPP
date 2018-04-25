@@ -25,7 +25,7 @@ python train.py \
 --optimizer=sgd \
 --scale_height=256 \
 --scale_width=128 \
---GPU_use=7 \
+--GPU_use=6 \
 
 python train.py \
 --learning_rate=0.001 \
@@ -43,7 +43,7 @@ python train.py \
 --optimizer=sgd \
 --scale_height=256 \
 --scale_width=128 \
---GPU_use=7 \
+--GPU_use=6 \
 
 # python train.py \
 # --learning_rate=0.001 \
