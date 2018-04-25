@@ -97,7 +97,7 @@ class SubResNet(BaseModel):
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
-        _, end_points = resnet_v1.resnet_v1_50(
+        net, end_points = resnet_v1.resnet_v1_50(
             x,
             is_training=self.is_training,
             global_pool=self.global_pool,
