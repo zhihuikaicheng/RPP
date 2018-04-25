@@ -359,8 +359,8 @@ class Trainer(object):
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
 
-        variables_base = [var for var in variables if not var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/embedding')]
-        variables_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/resnet_v1_50/embedding')]
+        variables_base = [var for var in variables if not var.name.startswith('resnet_v1_50/branch_0/embedding')]
+        variables_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/embedding')]
         # pdb.set_trace()
         grad_base = tf.gradients(self.network.loss, variables_base)
         grad_classifier = tf.gradients(self.network.loss * 10, variables_classifier)
