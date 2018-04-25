@@ -108,16 +108,16 @@ class SubResNet(BaseModel):
             scope='resnet_v1_50'
         )
         # pdb.set_trace()
-        with tf.variable_scope('enbedding'):
-            net = end_points['global_pool']
-            net = slim.flatten(net)
-            net = slim.fully_connected(net, 512)
-            net = slim.batch_norm(net, activation_fn=None)
-            net = tf.nn.relu(net)
-            net = slim.dropout(net, 0.5)
+        # with tf.variable_scope('enbedding'):
+        #     net = end_points['global_pool']
+        #     net = slim.flatten(net)
+        #     net = slim.fully_connected(net, 512)
+        #     net = slim.batch_norm(net, activation_fn=None)
+        #     net = tf.nn.relu(net)
+        #     net = slim.dropout(net, 0.5)
 
-        with tf.variable_scope('classifier'):
-            net = slim.fully_connected(net, self.num_classes, scope='logits')
+        # with tf.variable_scope('classifier'):
+        #     net = slim.fully_connected(net, self.num_classes, scope='logits')
 
         self.logits = net
         self.pred = slim.softmax(net)
