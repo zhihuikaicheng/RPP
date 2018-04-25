@@ -34,7 +34,7 @@ python train.py \
 --dataset_name=Market_1501 \
 --dataset_dir=${OUTPUT_DIR} \
 --batch_size=32 \
---max_number_of_steps=30000 \
+--max_number_of_steps=40000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
