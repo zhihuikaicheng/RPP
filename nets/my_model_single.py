@@ -115,7 +115,7 @@ class SubResNet(BaseModel):
             net = slim.batch_norm(net, activation_fn=None)
             net = tf.nn.relu(net)
             net = slim.dropout(net, 0.5)
-            net = slim.fully_connected(net, self.num_classes, scope='logits')
+            net = slim.fully_connected(net, self.num_classes, activation_fn=None, scope='logits')
 
         self.logits = net
         self.pred = slim.softmax(net)
