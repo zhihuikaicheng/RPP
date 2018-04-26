@@ -66,7 +66,7 @@ def pcb_net(inputs,
 
             if is_training:
                 if num_classes < 5000:
-                    net = slim.dropout(net, keep_prob=0.8)
+                    net = slim.dropout(net, keep_prob=0.5)
                 logits_part = slim.fully_connected(net,
                                                    num_classes,
                                                    activation_fn=None,
