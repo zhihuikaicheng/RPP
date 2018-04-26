@@ -268,7 +268,7 @@ def _configure_optimizer(learning_rate):
         momentum=FLAGS.rmsprop_momentum,
         epsilon=FLAGS.opt_epsilon)
   elif FLAGS.optimizer == 'sgd':
-    optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=0.9, use_nestrerov=True)
+    optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=0.9, use_nesterov=True)
   else:
     raise ValueError('Optimizer [%s] was not recognized', FLAGS.optimizer)
   return optimizer
