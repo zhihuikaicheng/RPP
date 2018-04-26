@@ -254,7 +254,7 @@ class Get_feature(object):
             FLAGS.num_classes-FLAGS.labels_offset,
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=True,
-            scope='resnet_v2_50',
+            scope='resnet_v1_50',
             global_pool=False,
             output_stride=16,
             spatial_squeeze=False,
@@ -379,13 +379,13 @@ class Get_feature(object):
             if len(filenames) > 0:
                 pattern = r'model\.ckpt\-(\d+)\.index'
                 nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
-                max_num = max(nums)
+                max_num = FLAGS.ckpt_num
                 if max_num <= FLAGS.max_step_to_train_pcb:
                     tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
                     tmp_d = {}
                     for var in tmp_vars:
                         name = var.name.replace(':0', '')
-                        if name.startswith('resnet_v2_50/branch_0/part_classifier'):
+                        if name.startswith('resnet_v1_50/branch_0/part_classifier'):
                             continue
                         tmp_d[name] = var
                     tmp_saver = tf.train.Saver(tmp_d)
