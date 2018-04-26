@@ -20,7 +20,7 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=20508 \
+--ckpt_num=36921 \
 --scale_height=256 \
 --scale_width=128 \
 --GPU_use=4 \
@@ -34,7 +34,7 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=21863 \
+--ckpt_num=38286 \
 --scale_height=256 \
 --scale_width=128 \
 --GPU_use=4 \
@@ -48,7 +48,7 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
 --weight_decay=0.00004 \
---ckpt_num=23230 \
+--ckpt_num=39646 \
 --scale_height=256 \
 --scale_width=128 \
 --GPU_use=4 \

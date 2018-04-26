@@ -15,25 +15,25 @@
 # --cam_probe_path=/home/yuanziyi/baseline2/RPP/143185/queryCAM.mat 
 
 python eval.py \
---label_gallery_path=/home/yuanziyi/baseline2/RPP/20508/test_gallery_labels.mat \
---feature_gallery_path=/home/yuanziyi/baseline2/RPP/20508/test_gallery_features.mat \
---label_probe_path=/home/yuanziyi/baseline2/RPP/20508/test_probe_labels.mat \
---feature_probe_path=/home/yuanziyi/baseline2/RPP/20508/test_probe_features.mat \
---cam_gallery_path=/home/yuanziyi/baseline2/RPP/20508/testCAM.mat \
---cam_probe_path=/home/yuanziyi/baseline2/RPP/20508/queryCAM.mat 
+--label_gallery_path=/home/yuanziyi/baseline2/RPP/36921/test_gallery_labels.mat \
+--feature_gallery_path=/home/yuanziyi/baseline2/RPP/36921/test_gallery_features.mat \
+--label_probe_path=/home/yuanziyi/baseline2/RPP/36921/test_probe_labels.mat \
+--feature_probe_path=/home/yuanziyi/baseline2/RPP/36921/test_probe_features.mat \
+--cam_gallery_path=/home/yuanziyi/baseline2/RPP/36921/testCAM.mat \
+--cam_probe_path=/home/yuanziyi/baseline2/RPP/36921/queryCAM.mat 
 
 python eval.py \
---label_gallery_path=/home/yuanziyi/baseline2/RPP/21863/test_gallery_labels.mat \
---feature_gallery_path=/home/yuanziyi/baseline2/RPP/21863/test_gallery_features.mat \
---label_probe_path=/home/yuanziyi/baseline2/RPP/21863/test_probe_labels.mat \
---feature_probe_path=/home/yuanziyi/baseline2/RPP/21863/test_probe_features.mat \
---cam_gallery_path=/home/yuanziyi/baseline2/RPP/21863/testCAM.mat \
---cam_probe_path=/home/yuanziyi/baseline2/RPP/21863/queryCAM.mat 
+--label_gallery_path=/home/yuanziyi/baseline2/RPP/38286/test_gallery_labels.mat \
+--feature_gallery_path=/home/yuanziyi/baseline2/RPP/38286/test_gallery_features.mat \
+--label_probe_path=/home/yuanziyi/baseline2/RPP/38286/test_probe_labels.mat \
+--feature_probe_path=/home/yuanziyi/baseline2/RPP/38286/test_probe_features.mat \
+--cam_gallery_path=/home/yuanziyi/baseline2/RPP/38286/testCAM.mat \
+--cam_probe_path=/home/yuanziyi/baseline2/RPP/38286/queryCAM.mat 
 
 python eval.py \
---label_gallery_path=/home/yuanziyi/baseline2/RPP/23230/test_gallery_labels.mat \
---feature_gallery_path=/home/yuanziyi/baseline2/RPP/23230/test_gallery_features.mat \
---label_probe_path=/home/yuanziyi/baseline2/RPP/23230/test_probe_labels.mat \
---feature_probe_path=/home/yuanziyi/baseline2/RPP/23230/test_probe_features.mat \
---cam_gallery_path=/home/yuanziyi/baseline2/RPP/23230/testCAM.mat \
---cam_probe_path=/home/yuanziyi/baseline2/RPP/23230/queryCAM.mat 
+--label_gallery_path=/home/yuanziyi/baseline2/RPP/39646/test_gallery_labels.mat \
+--feature_gallery_path=/home/yuanziyi/baseline2/RPP/39646/test_gallery_features.mat \
+--label_probe_path=/home/yuanziyi/baseline2/RPP/39646/test_probe_labels.mat \
+--feature_probe_path=/home/yuanziyi/baseline2/RPP/39646/test_probe_features.mat \
+--cam_gallery_path=/home/yuanziyi/baseline2/RPP/39646/testCAM.mat \
+--cam_probe_path=/home/yuanziyi/baseline2/RPP/39646/queryCAM.mat 
