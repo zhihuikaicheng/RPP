@@ -61,12 +61,12 @@ def pcb_net(inputs,
                                    normalizer_fn=None,
                                    scope="feature_%s" % i)
             net = slim.flatten(fc5_part)
-            if num_classes < 5000:
-                net = slim.dropout(net, keep_prob=0.8)
             vector_h.append(net)
             vector_g.append(slim.flatten(branch))
 
             if is_training:
+                if num_classes < 5000:
+                    net = slim.dropout(net, keep_prob=0.8)
                 logits_part = slim.fully_connected(net,
                                                    num_classes,
                                                    activation_fn=None,

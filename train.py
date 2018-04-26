@@ -268,13 +268,13 @@ def _configure_optimizer(learning_rate):
         momentum=FLAGS.rmsprop_momentum,
         epsilon=FLAGS.opt_epsilon)
   elif FLAGS.optimizer == 'sgd':
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+    optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=0.9, use_nestrerov=True)
   else:
     raise ValueError('Optimizer [%s] was not recognized', FLAGS.optimizer)
   return optimizer
 
 class que(object):
-    def __init__(self, max_size=1000):
+    def __init__(self, max_size=200):
         self.arr = []
         self.max_size = max_size
    
@@ -347,7 +347,7 @@ class Trainer(object):
             FLAGS.num_classes-FLAGS.labels_offset,
             [FLAGS.scale_height, FLAGS.scale_width],
             is_training=True,
-            scope='resnet_v2_50',
+            scope='resnet_v1_50',
             global_pool=False,
             output_stride=16,
             spatial_squeeze=False,
@@ -370,8 +370,8 @@ class Trainer(object):
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
 
-        variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v2_50/branch_0/part_classifier')]
-        bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v2_50/branch_0/part_classifier')]
+        variables_only_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/branch_0/part_classifier')]
+        bn_op_only_classifier = [bn for bn in bn_op if bn.name.startswith('resnet_v1_50/branch_0/part_classifier')]
         grad_only_classifier = tf.gradients(self.network.loss, variables_only_classifier)
         self.train_op_only_classifier = [self.optimizer.apply_gradients(zip(grad_only_classifier, variables_only_classifier))] + bn_op_only_classifier
 
