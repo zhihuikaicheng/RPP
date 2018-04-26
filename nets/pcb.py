@@ -41,7 +41,7 @@ def pcb_net(inputs,
         refined_part = slim.conv2d(inputs, num_parts, [1, 1], 
                                     stride=1, activation_fn=None,
                                     normalizer_fn=None, scope="refined_part")
-        refined_part = tf.nn.softmax(refined_part)
+        refined_part = slim.softmax(refined_part)
         end_points["refined_part"] = refined_part
     if not only_pcb:
         tmp_inputs = tf.expand_dims(inputs, axis=-1)
