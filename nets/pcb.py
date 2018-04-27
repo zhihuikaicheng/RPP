@@ -16,7 +16,7 @@ def LeakyRelu(x, leak=0.1):
 def pcb_net(inputs,
             end_points,
             num_classes,
-            feature_dim=256,
+            feature_dim=512,
             use_asoftmax=False,
             num_parts=6,
             output_layer="h",
@@ -65,7 +65,8 @@ def pcb_net(inputs,
             net = slim.conv2d(branch, feature_dim,
                                    [1, 1], stride=1,
                                    activation_fn=None,
-                                   normalizer_fn=None)
+                                   normalizer_fn=None,
+                                   scope="feature_%s" % i)
             vector_h.append(net)
             vector_g.append(branch)
             net = slim.batch_norm(net, activation_fn=None)
