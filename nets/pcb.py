@@ -8,6 +8,11 @@ import pdb
 slim = tf.contrib.slim
 
 
+def LeakyRelu(x, leak=0.1):
+         f1 = 0.5 * (1 + leak)
+         f2 = 0.5 * (1 - leak)
+         return f1 * x + f2 * tf.abs(x)
+
 def pcb_net(inputs,
             end_points,
             num_classes,
@@ -55,19 +60,17 @@ def pcb_net(inputs,
         for i in range(len(branches)):
             branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
                                     keep_dims=True)
-            # fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
-            #                        [1, 1], stride=1,
-            #                        activation_fn=None,
-            #                        normalizer_fn=None,
-            #                        scope="feature_%s" % i)
-            fc5_part = slim.conv2d(branch, feature_dim,
+            branch = slim.flatten(branch)
+
+            net = slim.conv2d(branch, feature_dim,
                                    [1, 1], stride=1,
                                    activation_fn=None,
                                    normalizer_fn=None,
                                    scope="feature_%s" % i)
-            net = slim.flatten(fc5_part)
             vector_h.append(net)
-            vector_g.append(slim.flatten(branch))
+            vector_g.append(branch)
+            net = slim.batch_norm(net, activation_fn=None)
+            net = LeakyRelu(net)
 
             if is_training:
                 if num_classes < 5000:
@@ -83,15 +86,9 @@ def pcb_net(inputs,
 
     vector_h_concat = tf.concat([v for v in vector_h], axis=1)
     vector_g_concat = tf.concat([g for g in vector_g], axis=1)
-    # if not is_training:
-    #     if output_layer == "g":
-    #         return vector_g_concat
-    #     else:
-    #         return vector_h_concat
 
     end_points["Logits"] = logits
-    # end_points["fc5"] = vector_h_concat
     end_points["h"] = vector_h_concat
-    end_points["g"] = vector_h_concat
+    end_points["g"] = vector_g_concat
     net = logits
     return net, end_points

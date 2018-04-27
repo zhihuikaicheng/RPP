@@ -2,7 +2,7 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/world/data-gpu-94/sysu-reid/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_v1_PCBRPP_new2
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_v1_PCBRPP_new3
 # Where the dataset is saved to.
 DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 # WHere the log is saved to
@@ -10,7 +10,7 @@ LOG_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/log
 # Wher the tfrecord file is save to
 OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_train
 python train.py \
---learning_rate=0.1 \
+--learning_rate=0.01 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
 --dataset_dir=${OUTPUT_DIR} \
@@ -32,7 +32,7 @@ python train.py \
 --max_step_to_train_classifier=4000
 
 python train.py \
---learning_rate=0.01 \
+--learning_rate=0.001 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
 --dataset_split_name=train \
