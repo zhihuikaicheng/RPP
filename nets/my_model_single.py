@@ -112,7 +112,6 @@ class SubResNet(BaseModel):
             net,
             end_points,
             self.num_classes,
-            feature_dim=2048,
             only_pcb=FLAGS.only_pcb
             )
 

@@ -55,7 +55,12 @@ def pcb_net(inputs,
         for i in range(len(branches)):
             branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
                                     keep_dims=True)
-            fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
+            # fc5_part = slim.conv2d(branch, int(feature_dim / num_parts),
+            #                        [1, 1], stride=1,
+            #                        activation_fn=None,
+            #                        normalizer_fn=None,
+            #                        scope="feature_%s" % i)
+            fc5_part = slim.conv2d(branch, feature_dim,
                                    [1, 1], stride=1,
                                    activation_fn=None,
                                    normalizer_fn=None,
