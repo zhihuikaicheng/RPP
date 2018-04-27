@@ -60,13 +60,15 @@ def pcb_net(inputs,
         for i in range(len(branches)):
             branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
                                     keep_dims=True)
-            branch = slim.flatten(branch)
 
             net = slim.conv2d(branch, feature_dim,
                                    [1, 1], stride=1,
                                    activation_fn=None,
                                    normalizer_fn=None,
                                    scope="feature_%s" % i)
+            
+            branch = slim.flatten(branch)
+            net = slim.flatten(net)
             vector_h.append(net)
             vector_g.append(branch)
             net = slim.batch_norm(net, activation_fn=None)
