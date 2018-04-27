@@ -65,8 +65,7 @@ def pcb_net(inputs,
             net = slim.conv2d(branch, feature_dim,
                                    [1, 1], stride=1,
                                    activation_fn=None,
-                                   normalizer_fn=None,
-                                   scope="feature_%s" % i)
+                                   normalizer_fn=None)
             vector_h.append(net)
             vector_g.append(branch)
             net = slim.batch_norm(net, activation_fn=None)
