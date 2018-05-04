@@ -1,4 +1,4 @@
-FEATURE_PATH=/home/yuanziyi/newPCB/RPP/23712
+FEATURE_PATH=/home/yuanziyi/newPCB/RPP/39881
 
 python eval.py \
 --label_gallery_path=${FEATURE_PATH}/test_gallery_labels.mat \
