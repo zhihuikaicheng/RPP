@@ -9,27 +9,27 @@ DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 LOG_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/log
 # Wher the tfrecord file is save to
 OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_train
-python train.py \
---learning_rate=0.01 \
---learning_rate_decay_type=fixed \
---dataset_name=Market_1501 \
---dataset_dir=${OUTPUT_DIR} \
---batch_size=32 \
---max_number_of_steps=16000 \
---checkpoint_dir=${TRAIN_DIR} \
---pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
---log_dir=${LOG_DIR} \
---save_model_summary_secs=200 \
---log_every_n_steps=100 \
---optimizer=sgd \
---weight_decay=5e-4 \
---scale_height=384 \
---scale_width=128 \
---GPU_use=5 \
---only_pcb=True \
---only_classifier=False \
---max_step_to_train_pcb=24000 \
---max_step_to_train_classifier=4000
+# python train.py \
+# --learning_rate=0.01 \
+# --learning_rate_decay_type=fixed \
+# --dataset_name=Market_1501 \
+# --dataset_dir=${OUTPUT_DIR} \
+# --batch_size=32 \
+# --max_number_of_steps=16000 \
+# --checkpoint_dir=${TRAIN_DIR} \
+# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
+# --log_dir=${LOG_DIR} \
+# --save_model_summary_secs=200 \
+# --log_every_n_steps=100 \
+# --optimizer=sgd \
+# --weight_decay=5e-4 \
+# --scale_height=384 \
+# --scale_width=128 \
+# --GPU_use=5 \
+# --only_pcb=True \
+# --only_classifier=False \
+# --max_step_to_train_pcb=24000 \
+# --max_step_to_train_classifier=4000
 
 python train.py \
 --learning_rate=0.001 \
@@ -38,7 +38,7 @@ python train.py \
 --dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --batch_size=32 \
---max_number_of_steps=24000 \
+--max_number_of_steps=40000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
