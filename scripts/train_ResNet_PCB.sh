@@ -25,7 +25,7 @@ python train.py \
 --weight_decay=5e-4 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=0 \
+--GPU_use=5 \
 --only_pcb=True \
 --only_classifier=False \
 --max_step_to_train_pcb=24000 \
@@ -48,7 +48,7 @@ python train.py \
 --weight_decay=5e-4 \
 --scale_height=384 \
 --scale_width=128 \
---GPU_use=0 \
+--GPU_use=5 \
 --only_pcb=True \
 --only_classifier=False \
 --max_step_to_train_pcb=24000 \

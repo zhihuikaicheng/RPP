@@ -16,7 +16,7 @@ def LeakyRelu(x, leak=0.1):
 def pcb_net(inputs,
             end_points,
             num_classes,
-            feature_dim=512,
+            feature_dim=256,
             use_asoftmax=False,
             num_parts=6,
             output_layer="h",
