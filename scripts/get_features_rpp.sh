@@ -6,7 +6,7 @@ TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_v1_PCBRPP_new4
 # Where the dataset is saved to.
 DATASET_DIR=/home/zhangkaicheng/Market-1501
 # WHere the log is saved to
-LOG_DIR=/home/zhangkaicheng/log
+LOG_DIR=/home/yuanziyi/log
 # Wher the tfrecord file is save to
 PROBE_OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/query
 # Wher the tfrecord file is save to
