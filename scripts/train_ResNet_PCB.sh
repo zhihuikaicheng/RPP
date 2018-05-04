@@ -51,6 +51,6 @@ python train.py \
 --GPU_use=5 \
 --only_pcb=True \
 --only_classifier=False \
---max_step_to_train_pcb=24000 \
+--max_step_to_train_pcb=40000 \
 --max_step_to_train_classifier=4000
 
