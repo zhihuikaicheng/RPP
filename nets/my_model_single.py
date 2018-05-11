@@ -112,7 +112,8 @@ class SubResNet(BaseModel):
             net,
             end_points,
             self.num_classes,
-            only_pcb=FLAGS.only_pcb
+            only_pcb=FLAGS.only_pcb,
+            is_training=self.is_training
             )
 
         # pdb.set_trace()

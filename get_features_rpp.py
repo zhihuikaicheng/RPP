@@ -253,7 +253,7 @@ class Get_feature(object):
         network = my_model.MyResNet(
             FLAGS.num_classes-FLAGS.labels_offset,
             [FLAGS.scale_height, FLAGS.scale_width],
-            is_training=True,
+            is_training=False,
             scope='resnet_v1_50',
             global_pool=False,
             output_stride=16,

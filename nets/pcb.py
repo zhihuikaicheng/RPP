@@ -58,7 +58,7 @@ def pcb_net(inputs,
 
     with tf.variable_scope('pcb'):
         for i in range(len(branches)):
-            branches[i] = slim.dropout(branches[i], keep_prob=0.5)
+            # branches[i] = slim.dropout(branches[i], keep_prob=0.5)
             branch = tf.reduce_mean(branches[i], [1, 2], name="pool5",
                                     keep_dims=True)
 
@@ -76,16 +76,15 @@ def pcb_net(inputs,
             net = LeakyRelu(net)
 
             if is_training:
-                # if num_classes < 5000:
-                #     net = slim.dropout(net, keep_prob=0.5)
-                logits_part = slim.fully_connected(net,
-                                                   num_classes,
-                                                   activation_fn=None,
-                                                   scope="logits_%s" % i)
-                logits.append(logits_part)
-                end_points["predictions_%s" % i] = slim.softmax(logits_part,
+                net = slim.dropout(net, keep_prob=0.5)
+
+            logits_part = slim.fully_connected(net,
+                                                num_classes,
+                                                activation_fn=None,
+                                                scope="logits_%s" % i)
+            logits.append(logits_part)
+            end_points["predictions_%s" % i] = slim.softmax(logits_part,
                                                                 scope="predictions")
-        # pdb.set_trace()
 
     vector_h_concat = tf.concat([v for v in vector_h], axis=1)
     vector_g_concat = tf.concat([g for g in vector_g], axis=1)
