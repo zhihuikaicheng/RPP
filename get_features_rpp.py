@@ -380,27 +380,16 @@ class Get_feature(object):
                 pattern = r'model\.ckpt\-(\d+)\.index'
                 nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
                 max_num = FLAGS.ckpt_num
-                if max_num <= FLAGS.max_step_to_train_pcb:
-                    tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-                    tmp_d = {}
-                    for var in tmp_vars:
-                        name = var.name.replace(':0', '')
-                        if name.startswith('resnet_v1_50/branch_0/part_classifier'):
-                            continue
-                        tmp_d[name] = var
-                    tmp_saver = tf.train.Saver(tmp_d)
-                    self.saver = tmp_saver
-
-                elif max_num <= FLAGS.max_step_to_train_pcb + FLAGS.max_step_to_train_classifier:
-                    tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-                    tmp_d = {}
-                    for var in tmp_vars:
-                        name = var.name.replace(':0', '')
-                        if name.endswith('Adam') or name.endswith('Adam_1'):
-                            continue
-                        tmp_d[name] = var
-                    tmp_saver = tf.train.Saver(tmp_d)
-                    self.saver = tmp_saver
+                # if max_num <= FLAGS.max_step_to_train_pcb:
+                #     tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+                #     tmp_d = {}
+                #     for var in tmp_vars:
+                #         name = var.name.replace(':0', '')
+                #         if name.startswith('resnet_v1_50/branch_0/part_classifier'):
+                #             continue
+                #         tmp_d[name] = var
+                #     tmp_saver = tf.train.Saver(tmp_d)
+                #     self.saver = tmp_saver
                 
                 self.saver.restore(self.sess, os.path.join(FLAGS.checkpoint_dir, 'model.ckpt-{}'.format(max_num)))
                 print("[zkc]use checkpoint-{} weights".format(max_num))

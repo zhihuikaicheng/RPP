@@ -480,18 +480,7 @@ class Trainer(object):
                     tmp_d = {}
                     for var in tmp_vars:
                         name = var.name.replace(':0', '')
-                        if name.startswith('resnet_v2_50/branch_0/part_classifier'):
-                            continue
-                        tmp_d[name] = var
-                    tmp_saver = tf.train.Saver(tmp_d)
-                    self.saver = tmp_saver
-
-                elif max_num <= FLAGS.max_step_to_train_pcb + FLAGS.max_step_to_train_classifier:
-                    tmp_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-                    tmp_d = {}
-                    for var in tmp_vars:
-                        name = var.name.replace(':0', '')
-                        if name.endswith('Adam') or name.endswith('Adam_1'):
+                        if name.startswith('resnet_v1_50/branch_0/part_classifier'):
                             continue
                         tmp_d[name] = var
                     tmp_saver = tf.train.Saver(tmp_d)
